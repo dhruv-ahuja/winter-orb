@@ -10,18 +10,20 @@
   font-weight: 400;
 } */
 
-/* TODO: fix scrollbar apearing at 100% height! */
 html {
   font: 14px "Noto Sans", sans-serif;
   font-weight: 400;
   background-color: black;
   color: aliceblue;
   border-radius: 12px;
-  height: 99%;
+  height: 100vh;
 }
 
 body {
-  height: 99%;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
 }
 
 .sidebar a {
@@ -50,6 +52,7 @@ body {
   width: 14em;
   max-height: 65%;
   overflow-y: scroll;
+  padding: 6px;
 }
 
 .sidebar-group {

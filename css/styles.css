@@ -10,22 +10,89 @@
   font-weight: 400;
 } */
 
+/* TODO: fix scrollbar apearing at 100% height! */
 html {
   font: 14px "Noto Sans", sans-serif;
   font-weight: 400;
   background-color: black;
   color: aliceblue;
   border-radius: 12px;
+  height: 99%;
+}
+
+body {
+  height: 99%;
+}
+
+.sidebar a {
+  text-decoration: none;
+  /* TODO: create global colours for reuse */
+  /* color: rgba(134, 134, 134, 88); */
+  color: #f6f7fdde;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  font: 20px "Noto Sans", sans-serif;
+  font: 18px "Noto Sans", sans-serif;
   font-weight: 500;
 }
 
 .logo-img {
   height: 92.02px;
   width: 91.5px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2em;
+  width: 14em;
+  max-height: 65%;
+  overflow-y: scroll;
+}
+
+.sidebar-group {
+  color: rgba(246, 247, 253, 0.4);
+  font: 16px "Sintony", sans-serif;
+  font-weight: 700;
+}
+
+.sidebar-category-gap {
+  width: 100%;
+  /* bg color, height and border ensure that the line break is filled with given colour */
+  background-color: rgba(103, 98, 98, 59);
+  height: 1px;
+  border: 0;
+}
+
+.sidebar-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font: 14px "Noto Sans", sans-serif;
+  font-weight: 500;
+}
+
+.sidebar-category {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  border-radius: 4px;
+}
+
+.sidebar-category:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-category-img {
+  padding-left: 0.75em;
+  width: 28px;
+  height: 28px;
+}
+
+.sidebar-group-gap {
+  width: inherit;
+  height: 0.5em;
+  border: 0;
 }

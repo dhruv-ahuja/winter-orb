@@ -11,8 +11,6 @@
 } */
 
 html {
-  font: 14px "Noto Sans", sans-serif;
-  font-weight: 400;
   background-color: black;
   color: aliceblue;
   border-radius: 12px;
@@ -36,7 +34,8 @@ body {
 .logo {
   display: flex;
   align-items: center;
-  font: 18px "Noto Sans", sans-serif;
+  color: #8378ffe2;
+  font: 1.3em "Noto Sans", sans-serif;
   font-weight: 500;
 }
 
@@ -50,14 +49,16 @@ body {
   flex-direction: column;
   margin-top: 2em;
   width: 14em;
-  max-height: 65%;
+  max-height: 70%;
   overflow-y: scroll;
   padding: 6px;
+  max-width: 40%;
+  /* overflow-x: hidden; */
 }
 
 .sidebar-group {
   color: rgba(246, 247, 253, 0.4);
-  font: 16px "Sintony", sans-serif;
+  font: 1.05em "Sintony", sans-serif;
   font-weight: 700;
 }
 
@@ -73,7 +74,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font: 14px "Noto Sans", sans-serif;
+  font-size: 0.9em;
   font-weight: 500;
 }
 

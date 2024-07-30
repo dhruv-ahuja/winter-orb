@@ -29,6 +29,7 @@ export class Footer extends LitElement {
         justify-content: space-between;
         align-items: flex-start;
         box-sizing: border-box;
+        font: 0.95em "Noto Sans", sans-serif;
         }
 
         /* * matches the svg icon colour */

@@ -18,7 +18,7 @@ export class Footer extends LitElement {
         border: 0;
         }
 
-        .footer {
+        footer {
         width: 100%;
         padding: 6px 24px;
         bottom: 0;
@@ -53,7 +53,7 @@ export class Footer extends LitElement {
         return html`
 
             <hr class="footer-section" />
-            <section class="footer">
+            <footer>
             <div class="footer-declaration">
                 This product isn't affiliated with or endorsed by Grinding Gear Games in any way.
             </div>
@@ -67,7 +67,7 @@ export class Footer extends LitElement {
                 <img class="footer-icon" src="media/twitter.svg" />
                 </a>
             </div>
-            </section>
+            </footer>
 
         `
     }

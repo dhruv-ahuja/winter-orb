@@ -44,6 +44,7 @@ body {
   width: 91.5px;
 }
 
+/* TODO: create and use navbar element for mobile devices */
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -52,8 +53,8 @@ body {
   max-height: 70%;
   overflow-y: scroll;
   padding: 6px;
-  max-width: 40%;
-  /* overflow-x: hidden; */
+  max-width: 21%;
+  overflow-x: hidden;
 }
 
 .sidebar-group {

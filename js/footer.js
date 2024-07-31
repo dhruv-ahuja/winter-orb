@@ -6,7 +6,7 @@ export class Footer extends LitElement {
         .footer-section {
         width: 100%;
         position: fixed;
-        top: 92%;
+        top: 95%;
         /* left: 50%;
         transform: translateX(-50%); */
         left: 0;
@@ -22,7 +22,7 @@ export class Footer extends LitElement {
         width: 100%;
         padding: 6px 24px;
         bottom: 0;
-        height: 6%;
+        height: 4%;
         left: 0;
         position: fixed;
         display: flex;

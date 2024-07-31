@@ -24,13 +24,6 @@ body {
   padding: 0;
 }
 
-.sidebar a {
-  text-decoration: none;
-  /* TODO: create global colours for reuse */
-  /* color: rgba(134, 134, 134, 88); */
-  color: #f6f7fdde;
-}
-
 .logo {
   display: flex;
   align-items: center;
@@ -42,6 +35,17 @@ body {
 .logo-img {
   height: 92.02px;
   width: 91.5px;
+  max-height: 12%;
+}
+
+.content-wrapper {
+  position: fixed;
+  display: flex;
+  height: 100%;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  column-gap: 1.5em;
 }
 
 /* TODO: create and use navbar element for mobile devices */
@@ -50,11 +54,17 @@ body {
   flex-direction: column;
   margin-top: 2em;
   width: 14em;
-  max-height: 70%;
+  max-height: 75%;
   overflow-y: scroll;
   padding: 6px;
-  max-width: 21%;
   overflow-x: hidden;
+}
+
+.sidebar a {
+  text-decoration: none;
+  /* TODO: create global colours for reuse */
+  /* color: rgba(134, 134, 134, 88); */
+  color: #f6f7fdde;
 }
 
 .sidebar-group {
@@ -100,4 +110,11 @@ body {
   width: inherit;
   height: 0.5em;
   border: 0;
+}
+
+.items-container {
+  background-color: #212121;
+  padding: 8px;
+  flex: 1;
+  border-radius: 12px;
 }

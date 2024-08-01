@@ -35,29 +35,18 @@ body {
 .logo-img {
   height: 92.02px;
   width: 91.5px;
-  max-height: 12%;
-}
-
-.content-wrapper {
-  position: fixed;
-  display: flex;
-  height: 100%;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-  column-gap: 1.5em;
 }
 
 /* TODO: create and use navbar element for mobile devices */
 .sidebar {
   display: flex;
   flex-direction: column;
-  margin-top: 2em;
   width: 14em;
-  max-height: 75%;
   overflow-y: scroll;
-  padding: 6px;
+  margin-top: 2em;
+  padding: 10px;
   overflow-x: hidden;
+  height: 74vh;
 }
 
 .sidebar a {
@@ -113,8 +102,13 @@ body {
 }
 
 .items-container {
-  background-color: #212121;
+  position: fixed;
+  top: 0;
+  margin-top: 1em;
+  left: 18em;
+  height: 87vh;
   padding: 8px;
-  flex: 1;
+  width: 85vw;
+  background-color: #212121;
   border-radius: 12px;
 }

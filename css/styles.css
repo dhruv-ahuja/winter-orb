@@ -120,7 +120,7 @@ body {
   padding-left: 1em;
   background-color: #212121;
   border-radius: 12px;
-  font: 1em "Sintony", sans-serif;
+  font: 0.9em "Sintony", sans-serif;
   font-weight: 500;
   color: rgb(189, 189, 189);
 }
@@ -137,12 +137,14 @@ body {
 
 .items-filter-wrapper {
   display: flex;
+  column-gap: 3em;
   /* NOTE: children don't need to inherit properties like padding if wrapper is inherting them already  */
   padding-left: inherit;
+  height: 2.5em;
 }
 
 .items-search-wrapper {
-  height: 2.5em;
+  height: 100%;
   width: 15em;
   max-width: 15em;
   align-items: center;
@@ -161,6 +163,8 @@ body {
   padding-left: 10px;
   font: inherit;
   font-weight: 500;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .items-search-clear-btn {
@@ -185,4 +189,19 @@ body {
 .items-search-clear-btn img {
   width: 100%;
   height: 100%;
+}
+
+.items-type-selection {
+  height: 100%;
+  width: max-content;
+  background-color: black;
+  border: 0;
+  color: inherit;
+  border-radius: 6px;
+  padding-right: 0;
+  padding-left: 10px;
+  font: inherit;
+  font-weight: 500;
+  padding-top: 0;
+  padding-bottom: 0;
 }

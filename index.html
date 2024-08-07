@@ -143,7 +143,32 @@
         </div>
       </div>
 
-      <div id="items-container" class="items-container"></div>
+      <div id="items-container" class="items-container">
+        <span class="items-container-title">Currency</span>
+
+        <div class="items-filter-wrapper">
+          <div class="items-search-wrapper">
+            <input
+              id="items-search"
+              class="items-search"
+              placeholder="Search for Item"
+              oninput="enableItemsSearchClearButton()"
+            />
+            <button
+              id="items-search-clear-btn"
+              class="items-search-clear-btn"
+              onclick="clearItemsSearchInput()"
+              title="Clear Search Input"
+              disabled
+            >
+              <img src="media/search/cross.svg" />
+            </button>
+          </div>
+          <!-- <img src="media/search/search.svg" class="items-search-btn" /> -->
+
+          <!-- <div class="items-type-filter"></div> -->
+        </div>
+      </div>
     </div>
 
     <custom-footer />
@@ -171,5 +196,6 @@
             </table> -->
 
     <link rel="stylesheet" href="./css/styles.css" />
+    <script src="js/script.js"></script>
   </body>
 </html>

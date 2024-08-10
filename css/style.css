@@ -123,6 +123,7 @@ body {
   font: 0.9em "Sintony", sans-serif;
   font-weight: 500;
   color: rgb(189, 189, 189);
+  row-gap: 2%;
 }
 
 .items-container-title {
@@ -204,4 +205,80 @@ body {
   font-weight: 500;
   padding-top: 0;
   padding-bottom: 0;
+}
+
+table {
+  margin-top: 2%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+tr {
+  background-color: black;
+}
+
+tbody > tr {
+  border-bottom: 4px solid #212121;
+}
+
+tbody > tr:last-child {
+  /* do not render border for the last row in the table */
+  border-bottom: 0;
+}
+
+th {
+  border-bottom: 0.5rem solid #212121;
+  padding: 0.5rem 0.25rem;
+}
+
+th:first-child {
+  text-align: left;
+  padding-left: 0.4rem;
+}
+
+td {
+  height: 40px;
+  text-align: center;
+  /* border-bottom: 4px solid #212121; */
+}
+
+td:first-child {
+  /* text-align: unset; */
+  padding-left: 0.4em;
+}
+
+.table-item-img {
+  height: 36px;
+  width: 36px;
+}
+
+.table-item-name {
+  padding-left: 0.5rem;
+}
+
+.table-item-col {
+  display: flex;
+  /* this helps align the text to center without affecting image positioning */
+  align-items: center;
+}
+
+.table-item-price-col {
+  display: flex;
+  /* this helps align the text to center without affecting image positioning */
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 1px;
+}
+
+.table-item-price {
+  padding-right: 0.5rem;
+}
+
+.table-item-price-img {
+  height: 30px;
+  width: 30px;
+}
+
+.table-item-converted-price {
+  color: rgba(189, 189, 189, 0.7);
 }

@@ -1,7 +1,6 @@
 // common script code
 
-function resetItemSearchFilter() {
-    // reset items table state 
+const resetItemsTable = () => {
     const tableBody = document.getElementsByTagName('tbody')[0]
     const itemRows = tableBody.getElementsByTagName('tr')
 
@@ -9,6 +8,11 @@ function resetItemSearchFilter() {
         const itemRow = itemRows[i]
         itemRow.style.display = 'table-row'
     }
+}
+
+function resetItemSearchFilter() {
+    // reset items table state 
+    resetItemsTable()
 
     // clear item search input
     const searchInput = document.getElementById('items-search')
@@ -35,13 +39,7 @@ function enableItemsSearchClearButton() {
     }
 }
 
-function filterItemsByName() {
-    const searchInput = document.getElementById('items-search')
-    const searchValue = searchInput.value.toLowerCase().trim()
-
-    const tableBody = document.getElementsByTagName('tbody')[0]
-    const itemRows = tableBody.getElementsByTagName('tr')
-
+function filterItemsByName(searchValue, itemRows) {
     for (i = 0; i < itemRows.length; i++) {
         const itemRow = itemRows[i]
         const itemNameColumn = itemRow.getElementsByTagName('td')[0]
@@ -52,6 +50,18 @@ function filterItemsByName() {
         } else {
             itemRow.style.display = 'table-row'
         }
+    }
+}
+
+function filterItems(filterMethod) {
+    const searchInput = document.getElementById('items-search')
+    const searchValue = searchInput.value.toLowerCase().trim()
+
+    const tableBody = document.getElementsByTagName('tbody')[0]
+    const itemRows = tableBody.getElementsByTagName('tr')
+
+    if (filterMethod === "name") {
+        filterItemsByName(searchValue, itemRows)
     }
 }
 

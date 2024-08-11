@@ -152,12 +152,12 @@
               id="items-search"
               class="items-search"
               placeholder="Search for Item"
-              oninput="enableItemsSearchClearButton()"
+              oninput="enableItemsSearchClearButton(); filterItemsByName()"
             />
             <button
               id="items-search-clear-btn"
               class="items-search-clear-btn"
-              onclick="clearItemsSearchInput()"
+              onclick="resetItemSearchFilter()"
               title="Clear Search Input"
               disabled
             >

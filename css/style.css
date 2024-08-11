@@ -119,7 +119,7 @@ body {
   padding: 8px;
   padding-left: 1em;
   background-color: #212121;
-  border-radius: 12px;
+  /* border-radius: 12px; */
   font: 0.9em "Sintony", sans-serif;
   font-weight: 500;
   color: rgb(189, 189, 189);
@@ -207,33 +207,61 @@ body {
   padding-bottom: 0;
 }
 
+.items-table-wrapper {
+  height: 100%;
+  overflow-y: scroll;
+}
+
 table {
   margin-top: 2%;
   border-collapse: collapse;
   table-layout: fixed;
+  width: 100%;
 }
 
 tr {
   background-color: black;
 }
 
-tbody > tr {
-  border-bottom: 4px solid #212121;
-}
-
-tbody > tr:last-child {
-  /* do not render border for the last row in the table */
-  border-bottom: 0;
-}
-
 th {
   border-bottom: 0.5rem solid #212121;
   padding: 0.5rem 0.25rem;
+  position: sticky;
+  z-index: 1;
 }
 
 th:first-child {
   text-align: left;
   padding-left: 0.4rem;
+}
+
+thead > tr {
+  position: sticky;
+  height: 2rem;
+  top: 0;
+}
+
+th.scrolled {
+  background-color: rgba(246, 247, 253, 0.4);
+  color: black;
+}
+
+tbody > tr {
+  border-bottom: 4px solid #212121;
+}
+
+tbody > tr:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* add underline to first column of every row, on hover */
+tbody > tr > td:first-of-type:hover {
+  text-decoration: underline;
+}
+
+tbody > tr:last-child {
+  /* do not render border for the last row in the table */
+  border-bottom: 0;
 }
 
 td {

@@ -24,3 +24,23 @@ function enableItemsSearchClearButton() {
         clearButton.setAttribute("disabled", "disabled")
     }
 }
+
+// changes table header colours on scroll to ensure legibility
+const changeScrollingHeaderColor = () => {
+    const tableContainer = document.getElementById('items-table-wrapper');
+    const headerCells = document.querySelectorAll('th');
+
+    tableContainer.addEventListener('scroll', () => {
+        const scrollTop = tableContainer.scrollTop;
+
+        headerCells.forEach(th => {
+            if (scrollTop > 0) {
+                th.classList.add('scrolled');
+            } else {
+                th.classList.remove('scrolled');
+            }
+        });
+    })
+}
+
+document.addEventListener('DOMContentLoaded', changeScrollingHeaderColor);

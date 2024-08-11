@@ -174,89 +174,254 @@
           </select>
         </div>
 
-        <table class="items-table" id="items-table">
-          <thead>
-            <th style="width: 40%">Name</th>
-            <th style="width: 20%">Type</th>
-            <th style="width: 10%">Value</th>
-            <th style="width: 15%">Last 7 Days</th>
-            <th style="width: 15%">Next 4 Days</th>
-          </thead>
-          <tbody>
-            <tr class="table-row">
-              <td>
-                <div class="table-item-col">
-                  <img src="media/table/mirror_of_kalandra.png" class="table-item-img" />
-                  <span class="table-item-name">Mirror of Kalandra</span>
-                </div>
-              </td>
-              <td>N/A</td>
-              <td>
-                <div class="table-item-price-col">
-                  <span class="table-item-price">74.6k</span>
-                  <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
-                </div>
-                <span class="table-item-converted-price">460.75 Div</span>
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr class="table-row">
-              <td>
-                <div class="table-item-col">
-                  <img src="media/table/mirror_shard.png" class="table-item-img" />
-                  <span class="table-item-name">Mirror Shard</span>
-                </div>
-              </td>
-              <td>N/A</td>
-              <td>
-                <div class="table-item-price-col">
-                  <span class="table-item-price">3.8k</span>
-                  <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
-                </div>
-                <span class="table-item-converted-price">23.8 Div</span>
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr class="table-row">
-              <td>
-                <div class="table-item-col">
-                  <img src="media/table/mirror_of_kalandra.png" class="table-item-img" />
-                  <span class="table-item-name">Mirror of Kalandra</span>
-                </div>
-              </td>
-              <td>N/A</td>
-              <td>
-                <div class="table-item-price-col">
-                  <span class="table-item-price">74.6k</span>
-                  <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
-                </div>
-                <span class="table-item-converted-price">460.75 Div</span>
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr class="table-row">
-              <td>
-                <div class="table-item-col">
-                  <img src="media/table/mirror_shard.png" class="table-item-img" />
-                  <span class="table-item-name">Mirror Shard</span>
-                </div>
-              </td>
-              <td>N/A</td>
-              <td>
-                <div class="table-item-price-col">
-                  <span class="table-item-price">3.8k</span>
-                  <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
-                </div>
-                <span class="table-item-converted-price">23.8 Div</span>
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="items-table-wrapper" id="items-table-wrapper">
+          <table class="items-table" id="items-table">
+            <thead>
+              <th style="width: 40%">Name</th>
+              <th style="width: 20%">Type</th>
+              <th style="width: 10%">Value</th>
+              <th style="width: 15%">Last 7 Days</th>
+              <th style="width: 15%">Next 4 Days</th>
+            </thead>
+            <tbody>
+              <tr class="table-row">
+                <td>
+                  <div class="table-item-col">
+                    <img src="media/table/mirror_of_kalandra.png" class="table-item-img" />
+                    <span class="table-item-name">Mirror of Kalandra</span>
+                  </div>
+                </td>
+                <td>N/A</td>
+                <td>
+                  <div class="table-item-price-col">
+                    <span class="table-item-price">74.6k</span>
+                    <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
+                  </div>
+                  <span class="table-item-converted-price">460.75 Div</span>
+                </td>
+                <!-- TODO: add graph impls. -->
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="table-row">
+                <td>
+                  <div class="table-item-col">
+                    <img src="media/table/mirror_shard.png" class="table-item-img" />
+                    <span class="table-item-name">Mirror Shard</span>
+                  </div>
+                </td>
+                <td>N/A</td>
+                <td>
+                  <div class="table-item-price-col">
+                    <span class="table-item-price">3.8k</span>
+                    <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
+                  </div>
+                  <span class="table-item-converted-price">23.8 Div</span>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="table-row">
+                <td>
+                  <div class="table-item-col">
+                    <img src="media/table/mirror_of_kalandra.png" class="table-item-img" />
+                    <span class="table-item-name">Mirror of Kalandra</span>
+                  </div>
+                </td>
+                <td>N/A</td>
+                <td>
+                  <div class="table-item-price-col">
+                    <span class="table-item-price">74.6k</span>
+                    <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
+                  </div>
+                  <span class="table-item-converted-price">460.75 Div</span>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="table-row">
+                <td>
+                  <div class="table-item-col">
+                    <img src="media/table/mirror_shard.png" class="table-item-img" />
+                    <span class="table-item-name">Mirror Shard</span>
+                  </div>
+                </td>
+                <td>N/A</td>
+                <td>
+                  <div class="table-item-price-col">
+                    <span class="table-item-price">3.8k</span>
+                    <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
+                  </div>
+                  <span class="table-item-converted-price">23.8 Div</span>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="table-row">
+                <td>
+                  <div class="table-item-col">
+                    <img src="media/table/mirror_shard.png" class="table-item-img" />
+                    <span class="table-item-name">Mirror Shard</span>
+                  </div>
+                </td>
+                <td>N/A</td>
+                <td>
+                  <div class="table-item-price-col">
+                    <span class="table-item-price">3.8k</span>
+                    <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
+                  </div>
+                  <span class="table-item-converted-price">23.8 Div</span>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="table-row">
+                <td>
+                  <div class="table-item-col">
+                    <img src="media/table/mirror_of_kalandra.png" class="table-item-img" />
+                    <span class="table-item-name">Mirror of Kalandra</span>
+                  </div>
+                </td>
+                <td>N/A</td>
+                <td>
+                  <div class="table-item-price-col">
+                    <span class="table-item-price">74.6k</span>
+                    <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
+                  </div>
+                  <span class="table-item-converted-price">460.75 Div</span>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="table-row">
+                <td>
+                  <div class="table-item-col">
+                    <img src="media/table/mirror_shard.png" class="table-item-img" />
+                    <span class="table-item-name">Mirror Shard</span>
+                  </div>
+                </td>
+                <td>N/A</td>
+                <td>
+                  <div class="table-item-price-col">
+                    <span class="table-item-price">3.8k</span>
+                    <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
+                  </div>
+                  <span class="table-item-converted-price">23.8 Div</span>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="table-row">
+                <td>
+                  <div class="table-item-col">
+                    <img src="media/table/mirror_shard.png" class="table-item-img" />
+                    <span class="table-item-name">Mirror Shard</span>
+                  </div>
+                </td>
+                <td>N/A</td>
+                <td>
+                  <div class="table-item-price-col">
+                    <span class="table-item-price">3.8k</span>
+                    <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
+                  </div>
+                  <span class="table-item-converted-price">23.8 Div</span>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="table-row">
+                <td>
+                  <div class="table-item-col">
+                    <img src="media/table/mirror_of_kalandra.png" class="table-item-img" />
+                    <span class="table-item-name">Mirror of Kalandra</span>
+                  </div>
+                </td>
+                <td>N/A</td>
+                <td>
+                  <div class="table-item-price-col">
+                    <span class="table-item-price">74.6k</span>
+                    <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
+                  </div>
+                  <span class="table-item-converted-price">460.75 Div</span>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="table-row">
+                <td>
+                  <div class="table-item-col">
+                    <img src="media/table/mirror_shard.png" class="table-item-img" />
+                    <span class="table-item-name">Mirror Shard</span>
+                  </div>
+                </td>
+                <td>N/A</td>
+                <td>
+                  <div class="table-item-price-col">
+                    <span class="table-item-price">3.8k</span>
+                    <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
+                  </div>
+                  <span class="table-item-converted-price">23.8 Div</span>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="table-row">
+                <td>
+                  <div class="table-item-col">
+                    <img src="media/table/mirror_shard.png" class="table-item-img" />
+                    <span class="table-item-name">Mirror Shard</span>
+                  </div>
+                </td>
+                <td>N/A</td>
+                <td>
+                  <div class="table-item-price-col">
+                    <span class="table-item-price">3.8k</span>
+                    <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
+                  </div>
+                  <span class="table-item-converted-price">23.8 Div</span>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="table-row">
+                <td>
+                  <div class="table-item-col">
+                    <img src="media/table/mirror_of_kalandra.png" class="table-item-img" />
+                    <span class="table-item-name">Mirror of Kalandra</span>
+                  </div>
+                </td>
+                <td>N/A</td>
+                <td>
+                  <div class="table-item-price-col">
+                    <span class="table-item-price">74.6k</span>
+                    <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
+                  </div>
+                  <span class="table-item-converted-price">460.75 Div</span>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="table-row">
+                <td>
+                  <div class="table-item-col">
+                    <img src="media/table/mirror_shard.png" class="table-item-img" />
+                    <span class="table-item-name">Mirror Shard</span>
+                  </div>
+                </td>
+                <td>N/A</td>
+                <td>
+                  <div class="table-item-price-col">
+                    <span class="table-item-price">3.8k</span>
+                    <img src="media/sidebar/chaos_orb.png" class="table-item-price-img" />
+                  </div>
+                  <span class="table-item-converted-price">23.8 Div</span>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 

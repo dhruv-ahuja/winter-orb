@@ -310,3 +310,8 @@ td:first-child {
 .table-item-converted-price {
   color: rgba(189, 189, 189, 0.7);
 }
+
+tr.search-filtered,
+tr.type-filtered {
+  display: none;
+}

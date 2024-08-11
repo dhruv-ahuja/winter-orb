@@ -46,22 +46,44 @@ function filterItemsByName(searchValue, itemRows) {
         const itemName = itemNameColumn.getElementsByClassName('table-item-name')[0]?.innerHTML.toLowerCase() ?? ""
 
         if (!itemName.includes(searchValue)) {
-            itemRow.style.display = 'none'
+            console.log(itemRow.classList)
+            itemRow.classList.add('search-filtered')
         } else {
+            itemRow.classList.remove('search-filtered')
+        }
+    }
+}
+
+// TODO: check url and disable this function for `currency` in the future
+function filterItemsByType(selectedItemType, itemRows) {
+    for (i = 0; i < itemRows.length; i++) {
+        const itemRow = itemRows[i]
+        const itemTypeColumn = itemRow.getElementsByTagName('td')[1]
+        const itemType = itemTypeColumn.innerHTML
+
+        if (itemType === selectedItemType || selectedItemType === "") {
             itemRow.style.display = 'table-row'
+            itemRow.classList.remove('type-filtered')
+        } else {
+            itemRow.classList.add('type-filtered')
         }
     }
 }
 
 function filterItems(filterMethod) {
-    const searchInput = document.getElementById('items-search')
-    const searchValue = searchInput.value.toLowerCase().trim()
-
     const tableBody = document.getElementsByTagName('tbody')[0]
     const itemRows = tableBody.getElementsByTagName('tr')
 
     if (filterMethod === "name") {
+        const searchInput = document.getElementById('items-search')
+        const searchValue = searchInput.value.toLowerCase().trim()
+
         filterItemsByName(searchValue, itemRows)
+    } else {
+        const itemTypeFilter = document.getElementById('items-type-selection')
+        const selectedItemType = itemTypeFilter.value
+
+        filterItemsByType(selectedItemType, itemRows)
     }
 }
 

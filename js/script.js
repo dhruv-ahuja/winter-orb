@@ -1,18 +1,15 @@
 // common script code
 
-const resetItemsTable = () => {
+
+function resetItemSearchFilter() {
+    // reset items table search state 
     const tableBody = document.getElementsByTagName('tbody')[0]
     const itemRows = tableBody.getElementsByTagName('tr')
 
     for (i = 0; i < itemRows.length; i++) {
         const itemRow = itemRows[i]
-        itemRow.style.display = 'table-row'
+        itemRow.classList.remove('search-filtered')
     }
-}
-
-function resetItemSearchFilter() {
-    // reset items table state 
-    resetItemsTable()
 
     // clear item search input
     const searchInput = document.getElementById('items-search')
@@ -26,6 +23,7 @@ function resetItemSearchFilter() {
     searchInput.focus()
 }
 
+// TODO: add some debouncing 
 function enableItemsSearchClearButton() {
     const searchInput = document.getElementById('items-search')
     const clearButton = document.getElementById("items-search-clear-btn")
@@ -62,7 +60,6 @@ function filterItemsByType(selectedItemType, itemRows) {
         const itemType = itemTypeColumn.innerHTML
 
         if (itemType === selectedItemType || selectedItemType === "") {
-            itemRow.style.display = 'table-row'
             itemRow.classList.remove('type-filtered')
         } else {
             itemRow.classList.add('type-filtered')

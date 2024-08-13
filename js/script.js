@@ -1,5 +1,16 @@
 // common script code
 
+function debounce(func, timeout = 300) {
+    let timer
+
+    return function (...args) {
+        clearTimeout(timer)
+
+        timer = setTimeout(() => {
+            func.apply(this, args)
+        }, timeout)
+    }
+}
 
 function resetItemSearchFilter() {
     // reset items table search state 
@@ -23,7 +34,6 @@ function resetItemSearchFilter() {
     searchInput.focus()
 }
 
-// TODO: add some debouncing 
 function enableItemsSearchClearButton() {
     const searchInput = document.getElementById('items-search')
     const clearButton = document.getElementById("items-search-clear-btn")
@@ -44,7 +54,6 @@ function filterItemsByName(searchValue, itemRows) {
         const itemName = itemNameColumn.getElementsByClassName('table-item-name')[0]?.innerHTML.toLowerCase() ?? ""
 
         if (!itemName.includes(searchValue)) {
-            console.log(itemRow.classList)
             itemRow.classList.add('search-filtered')
         } else {
             itemRow.classList.remove('search-filtered')
@@ -75,7 +84,8 @@ function filterItems(filterMethod) {
         const searchInput = document.getElementById('items-search')
         const searchValue = searchInput.value.toLowerCase().trim()
 
-        filterItemsByName(searchValue, itemRows)
+        const debouncedFilterFunc = debounce(filterItemsByName)
+        debouncedFilterFunc(searchValue, itemRows)
     } else {
         const itemTypeFilter = document.getElementById('items-type-selection')
         const selectedItemType = itemTypeFilter.value

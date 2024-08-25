@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Sintony:wght@400;700&display=swap" rel="stylesheet" />
 
     <script type="module" src="js/footer.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
   </head>
   <body>
     <div class="content-wrapper">
@@ -204,9 +205,18 @@
                   </div>
                   <span class="table-item-converted-price">460.75 Div</span>
                 </td>
-                <!-- TODO: add graph impls. -->
-                <td></td>
-                <td></td>
+                <td>
+                  <div class="priceHistoryWrapper">
+                    <div id="mirrorPriceHistory"></div>
+                    +21%
+                  </div>
+                </td>
+                <td>
+                  <div class="pricePredictionWrapper">
+                    <div id="mirrorPricePrediction"></div>
+                    -21%
+                  </div>
+                </td>
               </tr>
               <tr class="table-row">
                 <td>

@@ -12,6 +12,8 @@ function debounce(func, timeout = 300) {
     }
 }
 
+const debouncedFilterByName = debounce(filterItemsByName)
+
 function resetItemSearchFilter() {
     // reset items table search state 
     const tableBody = document.getElementsByTagName('tbody')[0]
@@ -84,8 +86,7 @@ function filterItems(filterMethod) {
         const searchInput = document.getElementById('items-search')
         const searchValue = searchInput.value.toLowerCase().trim()
 
-        const debouncedFilterFunc = debounce(filterItemsByName)
-        debouncedFilterFunc(searchValue, itemRows)
+        debouncedFilterByName(searchValue, itemRows)
     } else {
         const itemTypeFilter = document.getElementById('items-type-selection')
         const selectedItemType = itemTypeFilter.value
@@ -112,4 +113,71 @@ function changeScrollingHeaderColor() {
     })
 }
 
+const loadPriceHistoryData = () => {
+    const dataSet = [
+        ["2024-08-16T07:23:30.077482Z", "102466.67"],
+        ["2024-08-17T07:23:30.077485Z", "101200.00"],
+        ["2024-08-18T07:23:30.077487Z", "99955.20"],
+        ["2024-08-19T07:23:30.077488Z", "101500.00"],
+        ["2024-08-20T07:23:30.077490Z", "103629.17"],
+        ["2024-08-21T07:23:30.077492Z", "114157.89"],
+        ["2024-08-22T07:23:30.077493Z", "115600.00"]
+    ]
+    const data = dataSet.map((v) => parseFloat(v[1]))
+
+    Highcharts.chart('mirrorPriceHistory', {
+        chart: {
+            type: 'line',
+            backgroundColor: 'transparent',
+        },
+        title: { text: null },
+        xAxis: { visible: false },
+        yAxis: { visible: false },
+        legend: { enabled: false },
+        tooltip: { enabled: true },
+        credits: { enabled: false },
+        series: [{
+            data: data,
+            color: '#8378ffe2',
+            fillOpacity: 0.5,
+            lineWidth: 2,
+            marker: { enabled: false },
+            enableMouseTracking: false,
+        }],
+    })
+}
+
+const loadPricePredictionData = () => {
+    const dataSet = [
+        ["2024-08-19T07:23:30.077488Z", "101500.00"],
+        ["2024-08-16T07:23:30.077482Z", "98466.67"],
+        ["2024-08-17T07:23:30.077485Z", "98200.00"],
+        ["2024-08-18T07:23:30.077487Z", "99955.20"],
+    ]
+    const data = dataSet.map((v) => parseFloat(v[1]))
+
+    Highcharts.chart('mirrorPricePrediction', {
+        chart: {
+            type: 'line',
+            backgroundColor: 'transparent',
+        },
+        title: { text: null },
+        xAxis: { visible: false },
+        yAxis: { visible: false },
+        legend: { enabled: false },
+        tooltip: { enabled: true },
+        credits: { enabled: false },
+        series: [{
+            data: data,
+            color: 'red',
+            fillOpacity: 0.5,
+            lineWidth: 2,
+            marker: { enabled: false },
+            enableMouseTracking: false,
+        }],
+    })
+}
+
 document.addEventListener('DOMContentLoaded', changeScrollingHeaderColor);
+document.addEventListener('DOMContentLoaded', loadPriceHistoryData);
+document.addEventListener('DOMContentLoaded', loadPricePredictionData);

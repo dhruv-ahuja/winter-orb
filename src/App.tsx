@@ -1,14 +1,16 @@
-import './App.css'
-import Logo from './Logo'
+import "./App.css";
+import Logo from "./Logo";
+import Sidebar from "./Sidebar";
 
 function App() {
-    return (
-        <>
-            <div className='contentWrapper'>
-                <Logo />
-            </div>
-        </>
-    )
+  return (
+    <>
+      <div className="content-wrapper">
+        <Logo />
+        <Sidebar />
+      </div>
+    </>
+  );
 }
 
-export default App
+export default App;

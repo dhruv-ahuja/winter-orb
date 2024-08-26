@@ -70,27 +70,37 @@ const Category = (props: categoryProps) => {
 type categoryGroupProps = {
   name: string;
   categoryDetails: string[][];
+  addSpacing: boolean;
 };
 const CategoryGroup = (props: categoryGroupProps) => {
-  console.log(props);
   return (
-    <div className="sidebar-group">
-      {props.name}
-      <hr className="sidebar-category-gap" />
-      <div className="sidebar-categories">
-        {props.categoryDetails.map((categoryDetails) => (
-          <Category categoryDetails={categoryDetails} key={categoryDetails[0]}></Category>
-        ))}
+    <>
+      <div className="sidebar-group">
+        {props.name}
+        <hr className="sidebar-category-gap" />
+
+        <div className="sidebar-categories">
+          {props.categoryDetails.map((categoryDetails) => (
+            <Category categoryDetails={categoryDetails} key={categoryDetails[0]}></Category>
+          ))}
+        </div>
       </div>
-    </div>
+
+      {props.addSpacing && <hr className="sidebar-group-gap" />}
+    </>
   );
 };
 
 const Sidebar = () => {
   return (
     <div id="sidebar" className="sidebar">
-      {Array.from(categoryMapping).map(([group, categoryDetails]) => (
-        <CategoryGroup name={group} categoryDetails={categoryDetails} key={group} />
+      {Array.from(categoryMapping).map(([group, categoryDetails], index) => (
+        <CategoryGroup
+          name={group}
+          categoryDetails={categoryDetails}
+          key={group}
+          addSpacing={index != categoryDetails.length - 1}
+        />
       ))}
     </div>
   );

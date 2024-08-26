@@ -1,7 +1,7 @@
 import "./App.css";
-import Footer from "./Footer";
-import Logo from "./Logo";
-import Sidebar from "./Sidebar";
+import Footer from "./components/Footer/Footer";
+import Logo from "./components/Logo/Logo";
+import Sidebar from "./components/Sidebar/Sidebar";
 
 function App() {
   return (

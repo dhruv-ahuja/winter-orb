@@ -1,3 +1,5 @@
+import "./sidebar.css";
+
 const categoryMapping: Map<string, string[][]> = new Map([
   [
     "CURRENCY",

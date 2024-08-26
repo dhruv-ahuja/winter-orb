@@ -1,4 +1,5 @@
 import "./App.css";
+import Footer from "./Footer";
 import Logo from "./Logo";
 import Sidebar from "./Sidebar";
 
@@ -8,6 +9,7 @@ function App() {
       <div className="content-wrapper">
         <Logo />
         <Sidebar />
+        <Footer />
       </div>
     </>
   );

@@ -68,7 +68,7 @@
 .sidebar-categories {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
   font-size: 0.9em;
   font-weight: 500;
 }

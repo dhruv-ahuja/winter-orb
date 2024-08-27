@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./itemsContainer.css";
 import ItemsFilterContainer from "./ItemsFilter/ItemsFilter";
+import ItemsTable from "./ItemsTable/ItemsTable";
 
 const ItemsContainer = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -16,6 +17,8 @@ const ItemsContainer = () => {
         selectedItemType={selectedItemType}
         setSelectedItemType={setSelectedItemType}
       />
+
+      <ItemsTable searchInput={searchInput} selectedItemType={selectedItemType} />
     </div>
   );
 };

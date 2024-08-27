@@ -1,10 +1,11 @@
 import { useRef } from "react";
-import "./itemsContainer.css";
+import "./itemsFilter.css";
 
 type itemsSearchFilterProps = {
   searchInput: string;
   setSearchInput: (v: string) => void;
 };
+
 const ItemsSearchFilter = ({ searchInput, setSearchInput }: itemsSearchFilterProps) => {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -23,8 +24,7 @@ const ItemsSearchFilter = ({ searchInput, setSearchInput }: itemsSearchFilterPro
         value={searchInput}
         className="items-search"
         placeholder="Search for Item"
-        onChange={(e) => setSearchInput(e.target.value.trim())}
-        // onInput="enableItemsSearchClearButton(); filterItems('name')"
+        onChange={(e) => setSearchInput(e.target.value.toLowerCase())}
         ref={searchInputRef}
       />
       <button
@@ -44,6 +44,7 @@ type itemsTypeSelectorProps = {
   selectedItemType: string;
   setSelectedItemType: (v: string) => void;
 };
+
 const ItemsTypeSelector = ({ selectedItemType, setSelectedItemType }: itemsTypeSelectorProps) => {
   return (
     <select
@@ -52,7 +53,6 @@ const ItemsTypeSelector = ({ selectedItemType, setSelectedItemType }: itemsTypeS
       className="items-type-selection"
       value={selectedItemType}
       onChange={(e) => setSelectedItemType(e.target.value)}
-      //   onChange="filterItems('type')"
     >
       <option value="">Item Type</option>
       <option value="Two Handed Sword">Two Handed Sword</option>
@@ -68,6 +68,7 @@ type itemsFilterContainerProps = {
   selectedItemType: string;
   setSelectedItemType: (v: string) => void;
 };
+
 const ItemsFilterContainer = (props: itemsFilterContainerProps) => {
   return (
     <div className="items-filter-wrapper">

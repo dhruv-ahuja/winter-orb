@@ -209,7 +209,7 @@ body {
 
 .items-table-wrapper {
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 table {

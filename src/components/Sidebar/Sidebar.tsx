@@ -57,6 +57,7 @@ const categoryMapping: Map<string, string[][]> = new Map([
 type categoryProps = {
   categoryDetails: string[];
 };
+
 const Category = (props: categoryProps) => {
   const [name, imageName] = props.categoryDetails;
   const link = `/${name}`;
@@ -74,6 +75,7 @@ type categoryGroupProps = {
   categoryDetails: string[][];
   addSpacing: boolean;
 };
+
 const CategoryGroup = (props: categoryGroupProps) => {
   return (
     <>

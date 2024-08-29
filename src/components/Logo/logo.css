@@ -1,0 +1,22 @@
+.logo {
+  display: flex;
+  align-items: center;
+  /* font: 20px "Shippori Antique B1", sans-serif; */
+  /* font-weight: 400; */
+  font: 2em "Noto Sans", sans-serif;
+  font-weight: 500;
+  width: 100%;
+  padding: 10px;
+  height: 6vh;
+}
+
+.logo-colored-text {
+  color: #8378ffe2;
+}
+
+.logo-img {
+  height: 92.02px;
+  width: 91.5px;
+  width: 100%;
+  display: none;
+}

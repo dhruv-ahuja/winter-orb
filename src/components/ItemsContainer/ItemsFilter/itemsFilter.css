@@ -1,0 +1,70 @@
+.items-filter-wrapper {
+  display: flex;
+  column-gap: 3em;
+  /* NOTE: children don't need to inherit properties like padding if wrapper is inherting them already  */
+  padding-left: inherit;
+  height: 2.5em;
+}
+
+.items-search-wrapper {
+  height: 100%;
+  width: 15em;
+  max-width: 15em;
+  align-items: center;
+  display: flex;
+  column-gap: 0.5em;
+}
+
+.items-search {
+  height: 100%;
+  width: 80%;
+  background-color: black;
+  border: 0;
+  color: inherit;
+  border-radius: 6px;
+  padding-right: 0;
+  padding-left: 10px;
+  font: inherit;
+  font-weight: 500;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.items-search-clear-btn {
+  height: 75%;
+  width: 75%;
+  height: 28px;
+  width: 28px;
+  aspect-ratio: 1;
+  background-color: black;
+  padding: 2px;
+  border: 0;
+  flex: 1;
+  cursor: pointer;
+}
+
+.items-search-clear-btn:disabled {
+  /* opacity: 50%;
+    cursor: not-allowed; */
+  display: none;
+}
+
+.items-search-clear-btn img {
+  width: 100%;
+  height: 100%;
+}
+
+.items-type-selection {
+  height: 100%;
+  width: max-content;
+  background-color: black;
+  border: 0;
+  color: inherit;
+  border-radius: 6px;
+  padding-right: 0;
+  padding-left: 10px;
+  font: inherit;
+  font-weight: 500;
+  padding-top: 0;
+  padding-bottom: 0;
+}

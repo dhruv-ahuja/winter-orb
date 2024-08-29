@@ -17,3 +17,15 @@ export class BackendError extends Error {
 export function isBackendError(error: Error): error is BackendError {
   return error instanceof BackendError && "statusCode" in error && "apiError" in error;
 }
+
+// * base item row impl.; can be extended by other table components
+export interface baseItemRow {
+  name: string;
+  imgSrc: string;
+  type?: string;
+  priceChaos: string;
+  priceDivine: string;
+  priceHistoryData: string[][];
+  pricePredictionData: string[][];
+  listings: number;
+}

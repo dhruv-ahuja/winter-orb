@@ -67,7 +67,7 @@ const ItemsContainer = () => {
         setSelectedItemType={setSelectedItemType}
       />
 
-      {!data && <RefetchDataButton onButtonClick={refetchItemsData} />}
+      {isError && <RefetchDataButton onButtonClick={refetchItemsData} />}
       <ItemsTable itemRows={filteredRows} searchInput={searchInput} selectedItemType={selectedItemType} />
     </div>
   );

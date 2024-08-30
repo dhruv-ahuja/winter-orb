@@ -1,38 +1,8 @@
 import HighchartsReact from "highcharts-react-official";
 import "./itemsTable.css";
 import Highcharts from "highcharts";
-import { baseItemRow } from "../../../config";
-
-const priceHistoryData: string[][] = [
-  ["2024-08-16T07:23:30.077482Z", "102466.67"],
-  ["2024-08-17T07:23:30.077485Z", "101200.00"],
-  ["2024-08-18T07:23:30.077487Z", "99955.20"],
-  ["2024-08-19T07:23:30.077488Z", "101500.00"],
-  ["2024-08-20T07:23:30.077490Z", "103629.17"],
-  ["2024-08-21T07:23:30.077492Z", "114157.89"],
-  ["2024-08-22T07:23:30.077493Z", "115600.00"],
-];
-const pricePredictionData: string[][] = [
-  ["2024-08-19T07:23:30.077488Z", "101500.00"],
-  ["2024-08-16T07:23:30.077482Z", "98466.67"],
-  ["2024-08-17T07:23:30.077485Z", "98200.00"],
-  ["2024-08-18T07:23:30.077487Z", "99955.20"],
-];
-
-export interface tableHeader {
-  name: string;
-  width: string;
-}
-
-// TODO: maybe move this to some config file
-const commonHeaders: tableHeader[] = [
-  { name: "Name", width: "27.5%" },
-  { name: "Type", width: "17.5%" },
-  { name: "Value", width: "10%" },
-  { name: "Last 7 Days", width: "12%" },
-  { name: "Next 4 Days", width: "12%" },
-  { name: "Listings", width: "10%" },
-];
+import { baseItemRow, commonHeaders, kFormatter, tableHeader } from "../../../config";
+import { ReactElement } from "react";
 
 type tableHeadersProps = {
   headers: tableHeader[];
@@ -52,10 +22,7 @@ const TableHeaders = ({ headers }: tableHeadersProps) => {
   );
 };
 
-// TODO: use real data
-function generatePreviewChart(values: string[][], isProfit: boolean) {
-  const data = values.map((v) => parseFloat(v[1]));
-
+function generatePreviewChart(priceData: number[], isPositive: boolean) {
   const options: Highcharts.Options = {
     chart: {
       type: "line",
@@ -71,8 +38,8 @@ function generatePreviewChart(values: string[][], isProfit: boolean) {
     series: [
       //@ts-expect-error: this works for us
       {
-        data: data,
-        color: isProfit ? "#8378ffe2" : "red",
+        data: priceData,
+        color: isPositive ? "#8378ffe2" : "red",
         fillOpacity: 0.5,
         lineWidth: 2,
         marker: { enabled: false },
@@ -82,6 +49,13 @@ function generatePreviewChart(values: string[][], isProfit: boolean) {
   };
 
   return <HighchartsReact highcharts={Highcharts} options={options} />;
+}
+
+function prepareDivinePrice(price: string): ReactElement {
+  if (Number(price) <= 0) {
+    return <span></span>;
+  }
+  return <span className="table-item-converted-price">{price + " Div"}</span>;
 }
 
 interface TableRows {
@@ -102,25 +76,28 @@ const TableBody = ({ rows }: TableRows) => {
           <td>{row.type ?? "-"}</td>
           <td>
             <div className="table-item-price-col">
-              <span className="table-item-price">{row.priceChaos}</span>
+              <span className="table-item-price" title={row.priceChaos}>
+                {kFormatter(row.priceChaos)}
+              </span>
               <img src="/table/chaos_orb.png" className="table-item-price-img" />
             </div>
-            <span className="table-item-converted-price">{row.priceDivine}</span>
+            {prepareDivinePrice(row.priceDivine)}
           </td>
           <td>
-            <div className="price-history-wrapper">
+            {/* TODO: ensure that all values in this column are aligned! */}
+            <div className="price-history-wrapper" style={{ color: row.priceHistoryData.isPositive ? "" : "red" }}>
               <div id={`price-history`} className={`price-history`}>
-                {generatePreviewChart(priceHistoryData, true)}
+                {generatePreviewChart(row.priceHistoryData.priceData, row.priceHistoryData.isPositive)}
               </div>
-              +21%
+              {`${row.priceHistoryData.priceChange}%`}
             </div>
           </td>
           <td>
-            <div className="price-prediction-wrapper">
+            <div className="price-prediction-wrapper" style={{ color: row.priceHistoryData.isPositive ? "" : "red" }}>
               <div id={`price-prediction`} className={`price-prediction`}>
-                {generatePreviewChart(pricePredictionData, false)}
+                {generatePreviewChart(row.pricePredictionData.priceData, row.pricePredictionData.isPositive)}
               </div>
-              -21%
+              {`${row.pricePredictionData.priceChange}%`}
             </div>
           </td>
           <td>~{row.listings}</td>

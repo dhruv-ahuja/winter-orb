@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { APIData } from "../schemas/common";
-import { ItemsData } from "../schemas/poe";
+import { baseTableData, ItemsData, parseItemToTableData } from "../schemas/poe";
 import { BackendError, backendUrl } from "../../config";
 
 export const useGetItemsData = () =>
@@ -9,6 +9,12 @@ export const useGetItemsData = () =>
     queryFn: () => getItemsData(),
     retry: false,
     enabled: false,
+    select(data): baseTableData {
+      return {
+        itemRows: parseItemToTableData(data.data?.items ?? []),
+        pagination: data.data?.pagination,
+      };
+    },
   });
 
 // TODO: add query param support

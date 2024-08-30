@@ -1,9 +1,5 @@
+import { baseItemRow, Price } from "../../config";
 import { Pagination } from "./common";
-
-export type Price = {
-  timestamp: Date;
-  price: string;
-};
 
 export type PriceInfo = {
   chaos_price: string;
@@ -31,3 +27,26 @@ export type ItemsData = {
   items: Item[];
   pagination: Pagination;
 };
+
+export type baseTableData = {
+  itemRows: baseItemRow[];
+  pagination?: Pagination;
+};
+
+export function parseItemToTableData(items: Item[]): baseItemRow[] {
+  const itemRows = items.map((item) => {
+    const itemRow: baseItemRow = {
+      name: item.name,
+      imgSrc: item.icon_url,
+      type: item.type_,
+      priceChaos: item.price_info.chaos_price,
+      priceDivine: item.price_info.divine_price,
+      priceHistoryData: item.price_info.price_history,
+      pricePredictionData: item.price_info.price_prediction,
+      listings: item.price_info.listings,
+    };
+    return itemRow;
+  });
+
+  return itemRows;
+}

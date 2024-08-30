@@ -18,14 +18,19 @@ export function isBackendError(error: Error): error is BackendError {
   return error instanceof BackendError && "statusCode" in error && "apiError" in error;
 }
 
+export type Price = {
+  timestamp: Date;
+  price: string;
+};
+
 // * base item row impl.; can be extended by other table components
 export interface baseItemRow {
   name: string;
   imgSrc: string;
-  type?: string;
+  type?: string | null;
   priceChaos: string;
   priceDivine: string;
-  priceHistoryData: string[][];
-  pricePredictionData: string[][];
+  priceHistoryData: Price[];
+  pricePredictionData: Price[];
   listings: number;
 }

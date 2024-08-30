@@ -23,3 +23,22 @@
   height: fit-content;
   margin-bottom: 1.5em;
 }
+
+.refetch-data-wrapper {
+  color: red;
+  cursor: pointer;
+  display: flex;
+  /* flex-end will help align svg with the text */
+  align-items: flex-end;
+  max-height: 14px;
+  /* TODO: refactor this */
+  margin-top: 2%;
+  margin-bottom: -2.5%;
+  cursor: pointer;
+  z-index: 999;
+}
+
+.refetch-data-icon {
+  width: 16px;
+  height: 16px;
+}

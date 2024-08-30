@@ -1,18 +1,7 @@
 import HighchartsReact from "highcharts-react-official";
 import "./itemsTable.css";
 import Highcharts from "highcharts";
-
-// base item row impl.; can be extended by other table components
-export interface baseItemRow {
-  name: string;
-  imgSrc: string;
-  type?: string;
-  priceChaos: string;
-  priceDivine: string;
-  priceHistoryData: string[][];
-  pricePredictionData: string[][];
-  listings: number;
-}
+import { baseItemRow } from "../../../config";
 
 const priceHistoryData: string[][] = [
   ["2024-08-16T07:23:30.077482Z", "102466.67"],
@@ -30,123 +19,24 @@ const pricePredictionData: string[][] = [
   ["2024-08-18T07:23:30.077487Z", "99955.20"],
 ];
 
-const rows: baseItemRow[] = [
-  {
-    name: "Mirror of Kalandra",
-    imgSrc: "/table/mirror_of_kalandra.png",
-    priceChaos: "74.6k",
-    priceDivine: "460.75 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-  },
-  {
-    name: "Mirror of Kalandra",
-    imgSrc: "/table/mirror_of_kalandra.png",
-    priceChaos: "74.6k",
-    priceDivine: "460.75 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-    type: "Claw",
-  },
-  {
-    name: "Mirror of Kalandra",
-    imgSrc: "/table/mirror_of_kalandra.png",
-    priceChaos: "74.6k",
-    priceDivine: "460.75 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-    type: "Wand",
-  },
-  {
-    name: "Mirror of Kalandra",
-    imgSrc: "/table/mirror_of_kalandra.png",
-    priceChaos: "74.6k",
-    priceDivine: "460.75 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-  },
-  {
-    name: "Mirror of Kalandra",
-    imgSrc: "/table/mirror_of_kalandra.png",
-    priceChaos: "74.6k",
-    priceDivine: "460.75 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-    type: "Two Handed Sword",
-  },
-  {
-    name: "Mirror of Kalandra",
-    imgSrc: "/table/mirror_of_kalandra.png",
-    priceChaos: "74.6k",
-    priceDivine: "460.75 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-  },
-  {
-    name: "Mirror Shard",
-    imgSrc: "/table/mirror_shard.png",
-    priceChaos: "3.8k",
-    priceDivine: "23.8 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-    type: "Two Handed Sword",
-  },
-  {
-    name: "Mirror Shard",
-    imgSrc: "/table/mirror_shard.png",
-    priceChaos: "3.8k",
-    priceDivine: "23.8 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-    type: "Claw",
-  },
-  {
-    name: "Mirror Shard",
-    imgSrc: "/table/mirror_shard.png",
-    priceChaos: "3.8k",
-    priceDivine: "23.8 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-    type: "Wand",
-  },
-  {
-    name: "Mirror Shard",
-    imgSrc: "/table/mirror_shard.png",
-    priceChaos: "3.8k",
-    priceDivine: "23.8 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-  },
-];
-
 export interface tableHeader {
   name: string;
   width: string;
 }
-
-type tableHeadersProps = {
-  headers: tableHeader[];
-};
 
 // TODO: maybe move this to some config file
 const commonHeaders: tableHeader[] = [
   { name: "Name", width: "27.5%" },
   { name: "Type", width: "17.5%" },
   { name: "Value", width: "10%" },
-  { name: "Last 7 Days", width: "17.5%" },
-  { name: "Next 4 Days", width: "17.5%" },
+  { name: "Last 7 Days", width: "12%" },
+  { name: "Next 4 Days", width: "12%" },
   { name: "Listings", width: "10%" },
 ];
+
+type tableHeadersProps = {
+  headers: tableHeader[];
+};
 
 const TableHeaders = ({ headers }: tableHeadersProps) => {
   return (
@@ -162,6 +52,7 @@ const TableHeaders = ({ headers }: tableHeadersProps) => {
   );
 };
 
+// TODO: use real data
 function generatePreviewChart(values: string[][], isProfit: boolean) {
   const data = values.map((v) => parseFloat(v[1]));
 
@@ -240,32 +131,18 @@ const TableBody = ({ rows }: TableRows) => {
 };
 
 type itemsTableProps = {
-  //   rows: baseItemRow[];
+  itemRows: baseItemRow[];
   searchInput: string;
   selectedItemType: string;
 };
 
-function filterTableData(rows: baseItemRow[], { searchInput, selectedItemType }: itemsTableProps) {
-  if (!searchInput && !selectedItemType) {
-    return rows;
-  }
-
-  let filteredRows = searchInput
-    ? rows.filter((row) => row.name.toLowerCase().includes(searchInput.trim().toLowerCase()))
-    : rows;
-  filteredRows = selectedItemType ? filteredRows.filter((row) => row.type === selectedItemType) : filteredRows;
-
-  return filteredRows;
-}
-
+// TODO: add pagination support; add pagination buttons/visuals (perhaps a Load More would suffice)
 const ItemsTable = (props: itemsTableProps) => {
-  const filteredRows = filterTableData(rows, props);
-
   return (
     <div className="items-table-wrapper">
       <table>
         <TableHeaders headers={commonHeaders} />
-        <TableBody rows={filteredRows} />
+        <TableBody rows={props.itemRows} />
       </table>
     </div>
   );

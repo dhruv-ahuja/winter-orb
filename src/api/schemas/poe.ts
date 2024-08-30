@@ -1,5 +1,11 @@
-import { baseItemRow, Price } from "../../config";
+import { baseItemRow, calculateItemPriceChange, Price } from "../../config";
 import { Pagination } from "./common";
+
+export type priceTableData = {
+  priceData: number[];
+  priceChange: number;
+  isPositive: boolean;
+};
 
 export type PriceInfo = {
   chaos_price: string;
@@ -33,6 +39,18 @@ export type baseTableData = {
   pagination?: Pagination;
 };
 
+function prepareItemPriceData(priceData: Price[]): priceTableData {
+  const formattedPriceData = priceData.map((entry) => parseFloat(entry.price));
+  const priceChange = calculateItemPriceChange(formattedPriceData);
+  const isPositive = priceChange >= 0;
+
+  return {
+    priceData: formattedPriceData,
+    priceChange: priceChange,
+    isPositive: isPositive,
+  };
+}
+
 export function parseItemToTableData(items: Item[]): baseItemRow[] {
   const itemRows = items.map((item) => {
     const itemRow: baseItemRow = {
@@ -41,8 +59,8 @@ export function parseItemToTableData(items: Item[]): baseItemRow[] {
       type: item.type_,
       priceChaos: item.price_info.chaos_price,
       priceDivine: item.price_info.divine_price,
-      priceHistoryData: item.price_info.price_history,
-      pricePredictionData: item.price_info.price_prediction,
+      priceHistoryData: prepareItemPriceData(item.price_info.price_history),
+      pricePredictionData: prepareItemPriceData(item.price_info.price_prediction),
       listings: item.price_info.listings,
     };
     return itemRow;

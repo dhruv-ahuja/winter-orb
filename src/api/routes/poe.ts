@@ -8,7 +8,6 @@ export const useGetItemsData = () =>
     queryKey: ["itemData"],
     queryFn: () => getItemsData(),
     retry: false,
-    enabled: false,
     select(data): baseTableData {
       return {
         itemRows: parseItemToTableData(data.data?.items ?? []),

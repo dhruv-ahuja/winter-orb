@@ -42,11 +42,11 @@ export interface tableHeader {
 }
 
 export const commonHeaders: tableHeader[] = [
-  { name: "Name", width: "27.5%" },
+  { name: "Name", width: "25%" },
   { name: "Type", width: "17.5%" },
-  { name: "Value", width: "10%" },
-  { name: "Last 7 Days", width: "12%" },
-  { name: "Next 4 Days", width: "12%" },
+  { name: "Value", width: "8%" },
+  { name: "Last 7 Days", width: "14.25%" },
+  { name: "Next 4 Days", width: "14.25%" },
   { name: "Listings", width: "10%" },
 ];
 

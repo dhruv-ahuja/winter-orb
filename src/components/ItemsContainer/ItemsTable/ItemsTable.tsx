@@ -3,6 +3,7 @@ import "./itemsTable.css";
 import Highcharts from "highcharts";
 import { baseItemRow, commonHeaders, kFormatter, tableHeader } from "../../../config";
 import { ReactElement } from "react";
+import { Pagination } from "../../../api/schemas/common";
 
 type tableHeadersProps = {
   headers: tableHeader[];
@@ -93,7 +94,10 @@ const TableBody = ({ rows }: TableRows) => {
             </div>
           </td>
           <td>
-            <div className="price-prediction-wrapper" style={{ color: row.priceHistoryData.isPositive ? "" : "red" }}>
+            <div
+              className="price-prediction-wrapper"
+              style={{ color: row.pricePredictionData.isPositive ? "" : "red" }}
+            >
               <div id={`price-prediction`} className={`price-prediction`}>
                 {generatePreviewChart(row.pricePredictionData.priceData, row.pricePredictionData.isPositive)}
               </div>
@@ -111,6 +115,7 @@ type itemsTableProps = {
   itemRows: baseItemRow[];
   searchInput: string;
   selectedItemType: string;
+  pagination?: Pagination;
 };
 
 // TODO: add pagination support; add pagination buttons/visuals (perhaps a Load More would suffice)

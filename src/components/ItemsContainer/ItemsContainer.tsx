@@ -42,7 +42,7 @@ const ItemsContainer = () => {
     refetch();
   }
 
-  // TODO: show a skeleton or some transition state
+  // TODO: show a skeleton or some transition state (if needed)
   if (isLoading) {
     console.log("loading data");
   }
@@ -68,7 +68,12 @@ const ItemsContainer = () => {
       />
 
       {isError && <RefetchDataButton onButtonClick={refetchItemsData} />}
-      <ItemsTable itemRows={filteredRows} searchInput={searchInput} selectedItemType={selectedItemType} />
+      <ItemsTable
+        itemRows={filteredRows}
+        searchInput={searchInput}
+        selectedItemType={selectedItemType}
+        pagination={data?.pagination}
+      />
     </div>
   );
 };

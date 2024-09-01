@@ -2,19 +2,28 @@ import HighchartsReact from "highcharts-react-official";
 import "./itemsTable.css";
 import Highcharts from "highcharts";
 import { baseItemRow, commonHeaders, kFormatter, tableHeader } from "../../../config";
-import { ReactElement } from "react";
+import { MutableRefObject, ReactElement, RefObject, useEffect, useRef } from "react";
 import { Pagination } from "../../../api/schemas/common";
 
 type tableHeadersProps = {
   headers: tableHeader[];
+  tableHeaderRefs: MutableRefObject<HTMLTableHeaderCellElement[]>;
 };
 
-const TableHeaders = ({ headers }: tableHeadersProps) => {
+const TableHeaders = ({ headers, tableHeaderRefs }: tableHeadersProps) => {
   return (
     <thead>
       <tr>
-        {headers.map((header) => (
-          <th key={header.name} style={{ width: header.width }}>
+        {headers.map((header, index) => (
+          <th
+            key={header.name}
+            style={{ width: header.width }}
+            ref={(element) => {
+              if (element) {
+                tableHeaderRefs.current[index] = element;
+              }
+            }}
+          >
             {header.name}
           </th>
         ))}
@@ -45,6 +54,7 @@ function generatePreviewChart(priceData: number[], isPositive: boolean) {
         lineWidth: 2,
         marker: { enabled: false },
         enableMouseTracking: false,
+        zIndex: 0,
       },
     ],
   };
@@ -85,7 +95,7 @@ const TableBody = ({ rows }: TableRows) => {
             {prepareDivinePrice(row.priceDivine)}
           </td>
           <td>
-            {/* TODO: ensure that all values in this column are aligned! */}
+            {/* TODO: fix these charts rendering on top of headers during scroll */}
             <div className="price-history-wrapper" style={{ color: row.priceHistoryData.isPositive ? "" : "red" }}>
               <div id={`price-history`} className={`price-history`}>
                 {generatePreviewChart(row.priceHistoryData.priceData, row.priceHistoryData.isPositive)}
@@ -104,12 +114,27 @@ const TableBody = ({ rows }: TableRows) => {
               {`${row.pricePredictionData.priceChange}%`}
             </div>
           </td>
-          <td>~{row.listings}</td>
+          {/* round to nearest 10 */}
+          <td>~{Math.round(row.listings / 10) * 10}</td>
         </tr>
       ))}
     </tbody>
   );
 };
+
+function setScrollingHeadersProperty(
+  tableRef: RefObject<HTMLDivElement>,
+  tableHeaderRefs: MutableRefObject<HTMLTableHeaderCellElement[]>
+) {
+  {
+    const scrollTop = tableRef.current?.scrollTop ?? 0;
+    const scrolledBelow = scrollTop ?? 0 > 0;
+
+    tableHeaderRefs.current.forEach((header) =>
+      scrolledBelow ? header.classList.add("scrolled") : header.classList.remove("scrolled")
+    );
+  }
+}
 
 type itemsTableProps = {
   itemRows: baseItemRow[];
@@ -120,10 +145,28 @@ type itemsTableProps = {
 
 // TODO: add pagination support; add pagination buttons/visuals (perhaps a Load More would suffice)
 const ItemsTable = (props: itemsTableProps) => {
+  const tableRef: RefObject<HTMLDivElement> = useRef(null);
+  const tableHeaderRefs: MutableRefObject<HTMLTableHeaderCellElement[]> = useRef([]);
+
+  useEffect(() => {
+    const tableWrapper = tableRef.current;
+
+    if (tableWrapper) {
+      tableWrapper.addEventListener("scroll", () => setScrollingHeadersProperty(tableRef, tableHeaderRefs));
+    }
+
+    //   clean up function
+    return () => {
+      if (tableWrapper) {
+        tableWrapper.removeEventListener("scroll", () => setScrollingHeadersProperty);
+      }
+    };
+  }, []);
+
   return (
-    <div className="items-table-wrapper">
+    <div className="items-table-wrapper" ref={tableRef}>
       <table>
-        <TableHeaders headers={commonHeaders} />
+        <TableHeaders headers={commonHeaders} tableHeaderRefs={tableHeaderRefs} />
         <TableBody rows={props.itemRows} />
       </table>
     </div>

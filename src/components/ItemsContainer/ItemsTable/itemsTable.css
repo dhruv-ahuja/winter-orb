@@ -23,7 +23,6 @@ th {
   border-bottom: 0.5rem solid #212121;
   padding: 0.5rem 0.25rem;
   position: sticky;
-  z-index: 1;
 }
 
 th:first-child {

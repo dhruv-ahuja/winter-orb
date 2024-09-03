@@ -66,3 +66,18 @@ export function calculateItemPriceChange(priceData: number[]): number {
   const priceChange = ((finalValue - initialValue) / initialValue) * 100;
   return Math.round(priceChange);
 }
+
+export type paginationQuery = {
+  page: number;
+  perPage: number;
+};
+
+export type filterQuery = {
+  field: string;
+  operation: "like" | "=" | "!=" | ">" | "<" | ">=" | "<=";
+  value: string;
+};
+export type sortQuery = {
+  field: string;
+  operation: "asc" | "desc";
+};

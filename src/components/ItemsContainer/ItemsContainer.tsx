@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import "./itemsContainer.css";
 import ItemsFilterContainer from "./ItemsFilter/ItemsFilter";
 import ItemsTable from "./ItemsTable/ItemsTable";
-import { baseItemRow, isBackendError } from "../../config";
+import { baseItemRow, isBackendError, paginationQuery } from "../../config";
 import { useGetItemsData } from "../../api/routes/poe";
+import { Pagination } from "../../api/schemas/common";
 
+const PER_PAGE = 100;
+
+// TODO: we could set display: none instead of removing the entries from the array
 function filterTableData(searchInput: string, selectedItemType: string, itemRows: baseItemRow[]) {
   if (!searchInput && !selectedItemType) {
     return itemRows;
@@ -32,14 +36,64 @@ const RefetchDataButton = ({ onButtonClick }: refetchDataButtonProps) => {
   );
 };
 
+type paginationElementProps = {
+  pagination: Pagination;
+  pageNumber: number;
+  onButtonClick: (pageNumber: number) => void;
+  disablePageButtons: boolean;
+};
+const PaginationElement = ({ pagination, pageNumber, onButtonClick, disablePageButtons }: paginationElementProps) => {
+  const currentPage = pagination.page;
+  const itemsPerPage = pagination.per_page;
+
+  const itemsStart = currentPage == 1 ? currentPage : currentPage * itemsPerPage;
+  const itemsEnd = pagination.page == 1 ? currentPage * itemsPerPage : currentPage * itemsPerPage + itemsPerPage;
+
+  return (
+    <div className="pagination">
+      <span>
+        Showing items {itemsStart} to {itemsEnd} of {pagination?.total_items}
+      </span>
+
+      <div className="paginationButtonGroup">
+        {/* TODO: add icons if needed */}
+        <button
+          className="paginationButton"
+          onClick={() => onButtonClick(pageNumber - 1)}
+          disabled={currentPage == 1 || disablePageButtons}
+        >
+          Prev
+        </button>
+        <button
+          className="paginationButton"
+          onClick={() => onButtonClick(pageNumber + 1)}
+          disabled={currentPage == pagination.total_pages || disablePageButtons}
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const ItemsContainer = () => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedItemType, setSelectedItemType] = useState("");
+  const [pageNumber, setPageNumber] = useState(1);
+  const [disablePageButtons, setDisablePageButtons] = useState(false);
 
-  const { data, isLoading, isError, error, refetch } = useGetItemsData();
+  const paginationRequest = {
+    page: pageNumber,
+    perPage: PER_PAGE,
+  };
+  const { data, isLoading, isError, error, refetch, isSuccess } = useGetItemsData({ pagination: paginationRequest });
 
   function refetchItemsData() {
     refetch();
+  }
+
+  function handlePaginationButtonClick(pageNumber: number) {
+    setPageNumber(pageNumber);
   }
 
   // TODO: show a skeleton or some transition state (if needed)
@@ -54,7 +108,20 @@ const ItemsContainer = () => {
       console.error("An unexpected error occurred:", error);
     }
   }
+
   const filteredRows = filterTableData(searchInput, selectedItemType, data?.itemRows ?? []);
+
+  // disable pagination buttons until we load the table with new data
+  useEffect(() => {
+    refetch();
+    setDisablePageButtons(true);
+  }, [pageNumber, refetch]);
+
+  useEffect(() => {
+    if (isSuccess && disablePageButtons) {
+      setDisablePageButtons(false);
+    }
+  }, [disablePageButtons, isSuccess]);
 
   return (
     <div id="items-container" className="items-container">
@@ -68,12 +135,16 @@ const ItemsContainer = () => {
       />
 
       {isError && <RefetchDataButton onButtonClick={refetchItemsData} />}
-      <ItemsTable
-        itemRows={filteredRows}
-        searchInput={searchInput}
-        selectedItemType={selectedItemType}
-        pagination={data?.pagination}
-      />
+      <ItemsTable itemRows={filteredRows} searchInput={searchInput} selectedItemType={selectedItemType} />
+
+      {data?.pagination && (
+        <PaginationElement
+          pagination={data.pagination}
+          pageNumber={pageNumber}
+          onButtonClick={handlePaginationButtonClick}
+          disablePageButtons={disablePageButtons}
+        />
+      )}
     </div>
   );
 };

@@ -3,7 +3,6 @@ import "./itemsTable.css";
 import Highcharts from "highcharts";
 import { baseItemRow, commonHeaders, kFormatter, tableHeader } from "../../../config";
 import { MutableRefObject, ReactElement, RefObject, useEffect, useRef } from "react";
-import { Pagination } from "../../../api/schemas/common";
 
 type tableHeadersProps = {
   headers: tableHeader[];
@@ -140,10 +139,8 @@ type itemsTableProps = {
   itemRows: baseItemRow[];
   searchInput: string;
   selectedItemType: string;
-  pagination?: Pagination;
 };
 
-// TODO: add pagination support; add pagination buttons/visuals (perhaps a Load More would suffice)
 const ItemsTable = (props: itemsTableProps) => {
   const tableRef: RefObject<HTMLDivElement> = useRef(null);
   const tableHeaderRefs: MutableRefObject<HTMLTableHeaderCellElement[]> = useRef([]);

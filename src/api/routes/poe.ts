@@ -5,12 +5,14 @@ import { BackendError, backendUrl, filterQuery, paginationQuery, sortQuery } fro
 
 type getItemsDataProps = {
   pagination?: paginationQuery;
+  sortQueries?: sortQuery[];
+  filterQueries?: filterQuery[];
 };
 
-export const useGetItemsData = ({ pagination }: getItemsDataProps) =>
+export const useGetItemsData = ({ pagination, sortQueries, filterQueries }: getItemsDataProps) =>
   useQuery({
     queryKey: ["itemData"],
-    queryFn: () => getItemsData(pagination),
+    queryFn: () => getItemsData(pagination, sortQueries, filterQueries),
     retry: false,
     select(data): baseTableData {
       return {
@@ -20,15 +22,31 @@ export const useGetItemsData = ({ pagination }: getItemsDataProps) =>
     },
   });
 
-// TODO: add query param support
-// TODO: sort by price desc by default
-async function getItemsData(pagination?: paginationQuery): Promise<APIData<ItemsData>> {
+async function getItemsData(
+  pagination?: paginationQuery,
+  sortQueries?: sortQuery[],
+  filterQueries?: filterQuery[]
+): Promise<APIData<ItemsData>> {
   const url = new URL(backendUrl + "/poe/items");
   const searchParams = new URLSearchParams();
 
   if (pagination) {
     searchParams.append("page", String(pagination.page));
     searchParams.append("per_page", String(pagination.perPage));
+  }
+
+  if (sortQueries) {
+    sortQueries.forEach((entry) => {
+      const sortString = entry.operation == "desc" ? `-${entry.field}` : entry.field;
+      searchParams.append("sort", sortString);
+    });
+  }
+
+  if (filterQueries) {
+    filterQueries.forEach((entry) => {
+      const filterString = `${entry.field}:${entry.operation}:${entry.value}`;
+      searchParams.append("sort", filterString);
+    });
   }
 
   url.search = searchParams.toString();

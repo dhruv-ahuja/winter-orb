@@ -1,8 +1,8 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./itemsContainer.css";
 import ItemsFilterContainer from "./ItemsFilter/ItemsFilter";
 import ItemsTable from "./ItemsTable/ItemsTable";
-import { baseItemRow, isBackendError, paginationQuery } from "../../config";
+import { baseItemRow, isBackendError, paginationQuery, sortQuery } from "../../config";
 import { useGetItemsData } from "../../api/routes/poe";
 import { Pagination } from "../../api/schemas/common";
 
@@ -56,7 +56,6 @@ const PaginationElement = ({ pagination, pageNumber, onButtonClick, disablePageB
       </span>
 
       <div className="paginationButtonGroup">
-        {/* TODO: add icons if needed */}
         <button
           className="paginationButton"
           onClick={() => onButtonClick(pageNumber - 1)}
@@ -82,11 +81,16 @@ const ItemsContainer = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [disablePageButtons, setDisablePageButtons] = useState(false);
 
-  const paginationRequest = {
+  const paginationRequest: paginationQuery = {
     page: pageNumber,
     perPage: PER_PAGE,
   };
-  const { data, isLoading, isError, error, refetch, isSuccess } = useGetItemsData({ pagination: paginationRequest });
+  const sortRequest: sortQuery[] = [{ field: "price_info.chaos_price", operation: "desc" }];
+
+  const { data, isLoading, isError, error, refetch, isSuccess } = useGetItemsData({
+    pagination: paginationRequest,
+    sortQueries: sortRequest,
+  });
 
   function refetchItemsData() {
     refetch();

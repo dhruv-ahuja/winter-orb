@@ -23,3 +23,55 @@
   height: fit-content;
   margin-bottom: 1.5em;
 }
+
+.refetch-data-wrapper {
+  color: red;
+  cursor: pointer;
+  display: flex;
+  /* flex-end will help align svg with the text */
+  align-items: flex-end;
+  max-height: 14px;
+  /* TODO: refactor this */
+  margin-top: 2%;
+  margin-bottom: -2.5%;
+  cursor: pointer;
+  z-index: 999;
+}
+
+.refetch-data-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5vw;
+}
+
+.paginationButton {
+  background-color: #1a1a1a;
+  border: 2px solid #333;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 14px;
+  padding: 6px 14px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.paginationButton:first-child {
+  margin-right: 1vw;
+}
+
+.paginationButton:hover:not(:disabled) {
+  background-color: black;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+.paginationButton:disabled {
+  color: lightgrey;
+  cursor: not-allowed;
+  opacity: 0.5;
+}

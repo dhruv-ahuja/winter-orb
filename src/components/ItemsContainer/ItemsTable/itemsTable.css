@@ -23,7 +23,6 @@ th {
   border-bottom: 0.5rem solid #212121;
   padding: 0.5rem 0.25rem;
   position: sticky;
-  z-index: 1;
 }
 
 th:first-child {
@@ -90,7 +89,7 @@ td:first-child {
   display: flex;
   /* this helps align the text to center without affecting image positioning */
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding-bottom: 1px;
 }
 
@@ -115,10 +114,7 @@ td:first-child {
   align-items: center;
   font: 0.6em "Sintony", sans-serif;
   color: #8378ffe2;
-}
-
-.price-prediction-wrapper {
-  color: red;
+  justify-content: center;
 }
 
 #price-history,

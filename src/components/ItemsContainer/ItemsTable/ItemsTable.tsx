@@ -1,159 +1,28 @@
 import HighchartsReact from "highcharts-react-official";
 import "./itemsTable.css";
 import Highcharts from "highcharts";
-
-// base item row impl.; can be extended by other table components
-export interface baseItemRow {
-  name: string;
-  imgSrc: string;
-  type?: string;
-  priceChaos: string;
-  priceDivine: string;
-  priceHistoryData: string[][];
-  pricePredictionData: string[][];
-  listings: number;
-}
-
-const priceHistoryData: string[][] = [
-  ["2024-08-16T07:23:30.077482Z", "102466.67"],
-  ["2024-08-17T07:23:30.077485Z", "101200.00"],
-  ["2024-08-18T07:23:30.077487Z", "99955.20"],
-  ["2024-08-19T07:23:30.077488Z", "101500.00"],
-  ["2024-08-20T07:23:30.077490Z", "103629.17"],
-  ["2024-08-21T07:23:30.077492Z", "114157.89"],
-  ["2024-08-22T07:23:30.077493Z", "115600.00"],
-];
-const pricePredictionData: string[][] = [
-  ["2024-08-19T07:23:30.077488Z", "101500.00"],
-  ["2024-08-16T07:23:30.077482Z", "98466.67"],
-  ["2024-08-17T07:23:30.077485Z", "98200.00"],
-  ["2024-08-18T07:23:30.077487Z", "99955.20"],
-];
-
-const rows: baseItemRow[] = [
-  {
-    name: "Mirror of Kalandra",
-    imgSrc: "/table/mirror_of_kalandra.png",
-    priceChaos: "74.6k",
-    priceDivine: "460.75 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-  },
-  {
-    name: "Mirror of Kalandra",
-    imgSrc: "/table/mirror_of_kalandra.png",
-    priceChaos: "74.6k",
-    priceDivine: "460.75 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-    type: "Claw",
-  },
-  {
-    name: "Mirror of Kalandra",
-    imgSrc: "/table/mirror_of_kalandra.png",
-    priceChaos: "74.6k",
-    priceDivine: "460.75 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-    type: "Wand",
-  },
-  {
-    name: "Mirror of Kalandra",
-    imgSrc: "/table/mirror_of_kalandra.png",
-    priceChaos: "74.6k",
-    priceDivine: "460.75 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-  },
-  {
-    name: "Mirror of Kalandra",
-    imgSrc: "/table/mirror_of_kalandra.png",
-    priceChaos: "74.6k",
-    priceDivine: "460.75 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-    type: "Two Handed Sword",
-  },
-  {
-    name: "Mirror of Kalandra",
-    imgSrc: "/table/mirror_of_kalandra.png",
-    priceChaos: "74.6k",
-    priceDivine: "460.75 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-  },
-  {
-    name: "Mirror Shard",
-    imgSrc: "/table/mirror_shard.png",
-    priceChaos: "3.8k",
-    priceDivine: "23.8 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-    type: "Two Handed Sword",
-  },
-  {
-    name: "Mirror Shard",
-    imgSrc: "/table/mirror_shard.png",
-    priceChaos: "3.8k",
-    priceDivine: "23.8 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-    type: "Claw",
-  },
-  {
-    name: "Mirror Shard",
-    imgSrc: "/table/mirror_shard.png",
-    priceChaos: "3.8k",
-    priceDivine: "23.8 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-    type: "Wand",
-  },
-  {
-    name: "Mirror Shard",
-    imgSrc: "/table/mirror_shard.png",
-    priceChaos: "3.8k",
-    priceDivine: "23.8 Div",
-    priceHistoryData: priceHistoryData,
-    pricePredictionData: pricePredictionData,
-    listings: 200,
-  },
-];
-
-export interface tableHeader {
-  name: string;
-  width: string;
-}
+import { baseTableRow, commonHeaders, kFormatter, tableHeader } from "../../../config";
+import { MutableRefObject, ReactElement, RefObject, useEffect, useRef } from "react";
 
 type tableHeadersProps = {
   headers: tableHeader[];
+  tableHeaderRefs: MutableRefObject<HTMLTableHeaderCellElement[]>;
 };
 
-// TODO: maybe move this to some config file
-const commonHeaders: tableHeader[] = [
-  { name: "Name", width: "27.5%" },
-  { name: "Type", width: "17.5%" },
-  { name: "Value", width: "10%" },
-  { name: "Last 7 Days", width: "17.5%" },
-  { name: "Next 4 Days", width: "17.5%" },
-  { name: "Listings", width: "10%" },
-];
-
-const TableHeaders = ({ headers }: tableHeadersProps) => {
+const TableHeaders = ({ headers, tableHeaderRefs }: tableHeadersProps) => {
   return (
     <thead>
       <tr>
-        {headers.map((header) => (
-          <th key={header.name} style={{ width: header.width }}>
+        {headers.map((header, index) => (
+          <th
+            key={header.name}
+            style={{ width: header.width }}
+            ref={(element) => {
+              if (element) {
+                tableHeaderRefs.current[index] = element;
+              }
+            }}
+          >
             {header.name}
           </th>
         ))}
@@ -162,9 +31,7 @@ const TableHeaders = ({ headers }: tableHeadersProps) => {
   );
 };
 
-function generatePreviewChart(values: string[][], isProfit: boolean) {
-  const data = values.map((v) => parseFloat(v[1]));
-
+function generatePreviewChart(priceData: number[], isPositive: boolean) {
   const options: Highcharts.Options = {
     chart: {
       type: "line",
@@ -180,12 +47,13 @@ function generatePreviewChart(values: string[][], isProfit: boolean) {
     series: [
       //@ts-expect-error: this works for us
       {
-        data: data,
-        color: isProfit ? "#8378ffe2" : "red",
+        data: priceData,
+        color: isPositive ? "#8378ffe2" : "red",
         fillOpacity: 0.5,
         lineWidth: 2,
         marker: { enabled: false },
         enableMouseTracking: false,
+        zIndex: 0,
       },
     ],
   };
@@ -193,79 +61,116 @@ function generatePreviewChart(values: string[][], isProfit: boolean) {
   return <HighchartsReact highcharts={Highcharts} options={options} />;
 }
 
+function prepareDivinePrice(price: string): ReactElement {
+  if (Number(price) <= 0) {
+    return <span></span>;
+  }
+  return <span className="table-item-converted-price">{price + " Div"}</span>;
+}
+
 interface TableRows {
-  rows: baseItemRow[];
+  rows: baseTableRow[];
 }
 
 const TableBody = ({ rows }: TableRows) => {
   return (
     <tbody>
       {rows.map((row, index) => (
-        <tr className="table-row" key={index}>
+        <tr className="table-row" key={index} style={{ display: row.properties.visible ? "table-row" : "none" }}>
           <td>
             <div className="table-item-col">
-              <img src={row.imgSrc} className="table-item-img" />
-              <span className="table-item-name">{row.name}</span>
+              <img src={row.rowData.imgSrc} className="table-item-img" />
+              <span className="table-item-name">{row.rowData.name}</span>
             </div>
           </td>
-          <td>{row.type ?? "-"}</td>
+          <td>{row.rowData.type ?? "-"}</td>
           <td>
             <div className="table-item-price-col">
-              <span className="table-item-price">{row.priceChaos}</span>
+              <span className="table-item-price" title={row.rowData.priceChaos}>
+                {kFormatter(row.rowData.priceChaos)}
+              </span>
               <img src="/table/chaos_orb.png" className="table-item-price-img" />
             </div>
-            <span className="table-item-converted-price">{row.priceDivine}</span>
+            {prepareDivinePrice(row.rowData.priceDivine)}
           </td>
           <td>
-            <div className="price-history-wrapper">
+            {/* TODO: fix these charts rendering on top of headers during scroll */}
+            <div
+              className="price-history-wrapper"
+              style={{ color: row.rowData.priceHistoryData.isPositive ? "" : "red" }}
+            >
               <div id={`price-history`} className={`price-history`}>
-                {generatePreviewChart(priceHistoryData, true)}
+                {generatePreviewChart(row.rowData.priceHistoryData.priceData, row.rowData.priceHistoryData.isPositive)}
               </div>
-              +21%
+              {`${row.rowData.priceHistoryData.priceChange}%`}
             </div>
           </td>
           <td>
-            <div className="price-prediction-wrapper">
+            <div
+              className="price-prediction-wrapper"
+              style={{ color: row.rowData.pricePredictionData.isPositive ? "" : "red" }}
+            >
               <div id={`price-prediction`} className={`price-prediction`}>
-                {generatePreviewChart(pricePredictionData, false)}
+                {generatePreviewChart(
+                  row.rowData.pricePredictionData.priceData,
+                  row.rowData.pricePredictionData.isPositive
+                )}
               </div>
-              -21%
+              {`${row.rowData.pricePredictionData.priceChange}%`}
             </div>
           </td>
-          <td>~{row.listings}</td>
+          {/* round to nearest 10 */}
+          <td>~{Math.round(row.rowData.listings / 10) * 10}</td>
         </tr>
       ))}
     </tbody>
   );
 };
 
+function setScrollingHeadersProperty(
+  tableRef: RefObject<HTMLDivElement>,
+  tableHeaderRefs: MutableRefObject<HTMLTableHeaderCellElement[]>
+) {
+  {
+    const scrollTop = tableRef.current?.scrollTop ?? 0;
+    const scrolledBelow = scrollTop ?? 0 > 0;
+
+    tableHeaderRefs.current.forEach((header) =>
+      scrolledBelow ? header.classList.add("scrolled") : header.classList.remove("scrolled")
+    );
+  }
+}
+
 type itemsTableProps = {
-  //   rows: baseItemRow[];
+  itemRows: baseTableRow[];
   searchInput: string;
   selectedItemType: string;
 };
 
-function filterTableData(rows: baseItemRow[], { searchInput, selectedItemType }: itemsTableProps) {
-  if (!searchInput && !selectedItemType) {
-    return rows;
-  }
-
-  let filteredRows = searchInput
-    ? rows.filter((row) => row.name.toLowerCase().includes(searchInput.trim().toLowerCase()))
-    : rows;
-  filteredRows = selectedItemType ? filteredRows.filter((row) => row.type === selectedItemType) : filteredRows;
-
-  return filteredRows;
-}
-
 const ItemsTable = (props: itemsTableProps) => {
-  const filteredRows = filterTableData(rows, props);
+  const tableRef: RefObject<HTMLDivElement> = useRef(null);
+  const tableHeaderRefs: MutableRefObject<HTMLTableHeaderCellElement[]> = useRef([]);
+
+  useEffect(() => {
+    const tableWrapper = tableRef.current;
+
+    if (tableWrapper) {
+      tableWrapper.addEventListener("scroll", () => setScrollingHeadersProperty(tableRef, tableHeaderRefs));
+    }
+
+    //   clean up function
+    return () => {
+      if (tableWrapper) {
+        tableWrapper.removeEventListener("scroll", () => setScrollingHeadersProperty);
+      }
+    };
+  }, []);
 
   return (
-    <div className="items-table-wrapper">
+    <div className="items-table-wrapper" ref={tableRef}>
       <table>
-        <TableHeaders headers={commonHeaders} />
-        <TableBody rows={filteredRows} />
+        <TableHeaders headers={commonHeaders} tableHeaderRefs={tableHeaderRefs} />
+        <TableBody rows={props.itemRows} />
       </table>
     </div>
   );

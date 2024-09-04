@@ -5,6 +5,8 @@ import ItemsTable from "./ItemsTable/ItemsTable";
 import { baseTableRow, isBackendError, paginationQuery, sortQuery } from "../../config";
 import { useGetItemsData } from "../../api/routes/poe";
 import { Pagination } from "../../api/schemas/common";
+import { useLocation, useNavigate } from "react-router-dom";
+import { categoryLinkMapping } from "../../api/schemas/poe";
 
 const PER_PAGE = 100;
 
@@ -33,7 +35,7 @@ type refetchDataButtonProps = {
   onButtonClick: () => void;
 };
 
-// TODO: replace table with this button on failures
+// TODO: replace table content with this button on failures
 const RefetchDataButton = ({ onButtonClick }: refetchDataButtonProps) => {
   return (
     <div className="refetch-data-wrapper" onClick={() => onButtonClick()}>
@@ -83,6 +85,16 @@ const PaginationElement = ({ pagination, pageNumber, onButtonClick, disablePageB
 };
 
 const ItemsContainer = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const title = categoryLinkMapping.get(location.pathname);
+
+  // TODO: handle this in a better way
+  if (!title) {
+    console.warn("redirecting");
+    navigate("/");
+  }
+
   const [searchInput, setSearchInput] = useState("");
   const [selectedItemType, setSelectedItemType] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
@@ -136,7 +148,7 @@ const ItemsContainer = () => {
 
   return (
     <div id="items-container" className="items-container">
-      <span className="items-container-title">Unique Weapons</span>
+      <span className="items-container-title">{title}</span>
 
       <ItemsFilterContainer
         searchInput={searchInput}

@@ -2,24 +2,31 @@ import { useEffect, useState } from "react";
 import "./itemsContainer.css";
 import ItemsFilterContainer from "./ItemsFilter/ItemsFilter";
 import ItemsTable from "./ItemsTable/ItemsTable";
-import { baseItemRow, isBackendError, paginationQuery, sortQuery } from "../../config";
+import { baseTableRow, isBackendError, paginationQuery, sortQuery } from "../../config";
 import { useGetItemsData } from "../../api/routes/poe";
 import { Pagination } from "../../api/schemas/common";
 
 const PER_PAGE = 100;
 
-// TODO: we could set display: none instead of removing the entries from the array
-function filterTableData(searchInput: string, selectedItemType: string, itemRows: baseItemRow[]) {
+function filterTableData(searchInput: string, selectedItemType: string, itemRows: baseTableRow[]) {
   if (!searchInput && !selectedItemType) {
     return itemRows;
   }
 
-  let filteredRows = searchInput
-    ? itemRows.filter((row) => row.name.toLowerCase().includes(searchInput.trim().toLowerCase()))
-    : itemRows;
-  filteredRows = selectedItemType ? filteredRows.filter((row) => row.type === selectedItemType) : filteredRows;
+  itemRows.forEach((row) => {
+    const name = row.rowData.name.toLowerCase();
+    const input = searchInput.trim().toLowerCase();
 
-  return filteredRows;
+    if (input && !name.includes(input)) {
+      row.properties.visible = false;
+    }
+
+    if (selectedItemType && row.rowData.type !== selectedItemType) {
+      row.properties.visible = false;
+    }
+  });
+
+  return itemRows;
 }
 
 type refetchDataButtonProps = {

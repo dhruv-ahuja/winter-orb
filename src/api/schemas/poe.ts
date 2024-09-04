@@ -1,4 +1,4 @@
-import { baseItemRow, calculateItemPriceChange, Price } from "../../config";
+import { calculateItemPriceChange, Price, baseTableRow } from "../../config";
 import { Pagination } from "./common";
 
 export type priceTableData = {
@@ -35,7 +35,7 @@ export type ItemsData = {
 };
 
 export type baseTableData = {
-  itemRows: baseItemRow[];
+  itemRows: baseTableRow[];
   pagination?: Pagination;
 };
 
@@ -51,17 +51,20 @@ function prepareItemPriceData(priceData: Price[]): priceTableData {
   };
 }
 
-export function parseItemToTableData(items: Item[]): baseItemRow[] {
+export function parseItemToTableData(items: Item[]): baseTableRow[] {
   const itemRows = items.map((item) => {
-    const itemRow: baseItemRow = {
-      name: item.name,
-      imgSrc: item.icon_url,
-      type: item.type_,
-      priceChaos: item.price_info.chaos_price,
-      priceDivine: item.price_info.divine_price,
-      priceHistoryData: prepareItemPriceData(item.price_info.price_history),
-      pricePredictionData: prepareItemPriceData(item.price_info.price_prediction),
-      listings: item.price_info.listings,
+    const itemRow: baseTableRow = {
+      rowData: {
+        name: item.name,
+        imgSrc: item.icon_url,
+        type: item.type_,
+        priceChaos: item.price_info.chaos_price,
+        priceDivine: item.price_info.divine_price,
+        priceHistoryData: prepareItemPriceData(item.price_info.price_history),
+        pricePredictionData: prepareItemPriceData(item.price_info.price_prediction),
+        listings: item.price_info.listings,
+      },
+      properties: { visible: true },
     };
     return itemRow;
   });

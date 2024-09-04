@@ -36,6 +36,15 @@ export interface baseItemRow {
   listings: number;
 }
 
+interface rowProperties {
+  visible: boolean;
+}
+
+export interface baseTableRow {
+  rowData: baseItemRow;
+  properties: rowProperties;
+}
+
 export interface tableHeader {
   name: string;
   width: string;

@@ -1,7 +1,7 @@
 import HighchartsReact from "highcharts-react-official";
 import "./itemsTable.css";
 import Highcharts from "highcharts";
-import { baseItemRow, commonHeaders, kFormatter, tableHeader } from "../../../config";
+import { baseTableRow, commonHeaders, kFormatter, tableHeader } from "../../../config";
 import { MutableRefObject, ReactElement, RefObject, useEffect, useRef } from "react";
 
 type tableHeadersProps = {
@@ -69,52 +69,58 @@ function prepareDivinePrice(price: string): ReactElement {
 }
 
 interface TableRows {
-  rows: baseItemRow[];
+  rows: baseTableRow[];
 }
 
 const TableBody = ({ rows }: TableRows) => {
   return (
     <tbody>
       {rows.map((row, index) => (
-        <tr className="table-row" key={index}>
+        <tr className="table-row" key={index} style={{ display: row.properties.visible ? "table-row" : "none" }}>
           <td>
             <div className="table-item-col">
-              <img src={row.imgSrc} className="table-item-img" />
-              <span className="table-item-name">{row.name}</span>
+              <img src={row.rowData.imgSrc} className="table-item-img" />
+              <span className="table-item-name">{row.rowData.name}</span>
             </div>
           </td>
-          <td>{row.type ?? "-"}</td>
+          <td>{row.rowData.type ?? "-"}</td>
           <td>
             <div className="table-item-price-col">
-              <span className="table-item-price" title={row.priceChaos}>
-                {kFormatter(row.priceChaos)}
+              <span className="table-item-price" title={row.rowData.priceChaos}>
+                {kFormatter(row.rowData.priceChaos)}
               </span>
               <img src="/table/chaos_orb.png" className="table-item-price-img" />
             </div>
-            {prepareDivinePrice(row.priceDivine)}
+            {prepareDivinePrice(row.rowData.priceDivine)}
           </td>
           <td>
             {/* TODO: fix these charts rendering on top of headers during scroll */}
-            <div className="price-history-wrapper" style={{ color: row.priceHistoryData.isPositive ? "" : "red" }}>
+            <div
+              className="price-history-wrapper"
+              style={{ color: row.rowData.priceHistoryData.isPositive ? "" : "red" }}
+            >
               <div id={`price-history`} className={`price-history`}>
-                {generatePreviewChart(row.priceHistoryData.priceData, row.priceHistoryData.isPositive)}
+                {generatePreviewChart(row.rowData.priceHistoryData.priceData, row.rowData.priceHistoryData.isPositive)}
               </div>
-              {`${row.priceHistoryData.priceChange}%`}
+              {`${row.rowData.priceHistoryData.priceChange}%`}
             </div>
           </td>
           <td>
             <div
               className="price-prediction-wrapper"
-              style={{ color: row.pricePredictionData.isPositive ? "" : "red" }}
+              style={{ color: row.rowData.pricePredictionData.isPositive ? "" : "red" }}
             >
               <div id={`price-prediction`} className={`price-prediction`}>
-                {generatePreviewChart(row.pricePredictionData.priceData, row.pricePredictionData.isPositive)}
+                {generatePreviewChart(
+                  row.rowData.pricePredictionData.priceData,
+                  row.rowData.pricePredictionData.isPositive
+                )}
               </div>
-              {`${row.pricePredictionData.priceChange}%`}
+              {`${row.rowData.pricePredictionData.priceChange}%`}
             </div>
           </td>
           {/* round to nearest 10 */}
-          <td>~{Math.round(row.listings / 10) * 10}</td>
+          <td>~{Math.round(row.rowData.listings / 10) * 10}</td>
         </tr>
       ))}
     </tbody>
@@ -136,7 +142,7 @@ function setScrollingHeadersProperty(
 }
 
 type itemsTableProps = {
-  itemRows: baseItemRow[];
+  itemRows: baseTableRow[];
   searchInput: string;
   selectedItemType: string;
 };

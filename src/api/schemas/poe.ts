@@ -34,7 +34,7 @@ export const categoryMapping: Map<string, string[][]> = new Map([
     [
       ["Maps", "map.png"],
       ["Blighted Maps", "blighted_map.png"],
-      ["Blight-ravaged Maps", "blight_ravaged_map.png"],
+      ["Blight-Ravaged Maps", "blight_ravaged_map.png"],
       ["Unique Maps", "unique_map.png"],
       ["Delirium Orbs", "delirium_orb.png"],
       ["Invitations", "invitation.png"],
@@ -76,7 +76,7 @@ export const categoryLinkMapping: Map<string, string> = new Map([
   ["/cluster_jewels", "Cluster Jewels"],
   ["/maps", "Maps"],
   ["/blighted_maps", "Blighted Maps"],
-  ["/blight_ravaged_maps", "Blight-ravaged Maps"],
+  ["/blight_ravaged_maps", "Blight-Ravaged Maps"],
   ["/unique_maps", "Unique Maps"],
   ["/delirium_orbs", "Delirium Orbs"],
   ["/invitations", "Invitations"],

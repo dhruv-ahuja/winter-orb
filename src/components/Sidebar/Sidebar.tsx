@@ -7,7 +7,7 @@ type categoryProps = {
 
 const Category = (props: categoryProps) => {
   const [name, imageName] = props.categoryDetails;
-  const link = "/" + name.toLowerCase().replace(" ", "_");
+  const link = "/" + name.toLowerCase().replace(" ", "_").replace("-", "_");
 
   return (
     <a href={link}>

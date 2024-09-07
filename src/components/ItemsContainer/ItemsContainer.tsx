@@ -2,7 +2,14 @@ import { useEffect, useState } from "react";
 import "./itemsContainer.css";
 import ItemsFilterContainer from "./ItemsFilter/ItemsFilter";
 import ItemsTable from "./ItemsTable/ItemsTable";
-import { baseTableRow, isBackendError, paginationQuery, sortQuery } from "../../config";
+import {
+  baseTableRow,
+  isBackendError,
+  prepareCategoryName as prepareInternalCategoryName,
+  paginationQuery,
+  sortQuery,
+  filterQuery,
+} from "../../config";
 import { useGetItemsData } from "../../api/routes/poe";
 import { Pagination } from "../../api/schemas/common";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -85,12 +92,14 @@ const PaginationElement = ({ pagination, pageNumber, onButtonClick, disablePageB
 };
 
 const ItemsContainer = () => {
+  // TODO: perhaps move this to parent component
   const location = useLocation();
   const navigate = useNavigate();
-  const title = categoryLinkMapping.get(location.pathname);
+
+  const category = categoryLinkMapping.get(location.pathname) ?? "Currency";
 
   // TODO: handle this in a better way
-  if (!title) {
+  if (!category) {
     console.warn("redirecting");
     navigate("/");
   }
@@ -100,15 +109,20 @@ const ItemsContainer = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [disablePageButtons, setDisablePageButtons] = useState(false);
 
+  // TODO: fix search slow downs
   const paginationRequest: paginationQuery = {
     page: pageNumber,
     perPage: PER_PAGE,
   };
-  const sortRequest: sortQuery[] = [{ field: "price_info.chaos_price", operation: "desc" }];
+  const sortQueries: sortQuery[] = [{ field: "price_info.chaos_price", operation: "desc" }];
+  const filterQueries: filterQuery[] = [
+    { field: "category", operation: "=", value: prepareInternalCategoryName(category) },
+  ];
 
   const { data, isLoading, isError, error, refetch, isSuccess } = useGetItemsData({
     pagination: paginationRequest,
-    sortQueries: sortRequest,
+    sortQueries: sortQueries,
+    filterQueries: filterQueries,
   });
 
   function refetchItemsData() {
@@ -148,7 +162,7 @@ const ItemsContainer = () => {
 
   return (
     <div id="items-container" className="items-container">
-      <span className="items-container-title">{title}</span>
+      <span className="items-container-title">{category}</span>
 
       <ItemsFilterContainer
         searchInput={searchInput}

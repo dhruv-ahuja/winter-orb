@@ -86,7 +86,26 @@ export type filterQuery = {
   operation: "like" | "=" | "!=" | ">" | "<" | ">=" | "<=";
   value: string;
 };
+
 export type sortQuery = {
   field: string;
   operation: "asc" | "desc";
 };
+
+export function prepareCategoryName(s: string): string {
+  const formattedString = s.split(" ");
+  formattedString.forEach((word) => word[0].toUpperCase());
+
+  s = formattedString.join("");
+  s = s.replace(" ", "").replace("-", "");
+
+  if (s.endsWith("ies")) {
+    return s.replace("ies", "y");
+  }
+
+  if (s.endsWith("s")) {
+    return s.slice(0, s.length - 1);
+  }
+
+  return s;
+}

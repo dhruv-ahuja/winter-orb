@@ -45,7 +45,7 @@ async function getItemsData(
   if (filterQueries) {
     filterQueries.forEach((entry) => {
       const filterString = `${entry.field}:${entry.operation}:${entry.value}`;
-      searchParams.append("sort", filterString);
+      searchParams.append("filter", filterString);
     });
   }
 

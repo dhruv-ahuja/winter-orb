@@ -3,7 +3,7 @@
   column-gap: 3em;
   /* NOTE: children don't need to inherit properties like padding if wrapper is inherting them already  */
   padding-left: inherit;
-  height: 2.5em;
+  height: 2.75em;
 }
 
 .items-search-wrapper {

@@ -89,12 +89,12 @@ td:first-child {
   display: flex;
   /* this helps align the text to center without affecting image positioning */
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   padding-bottom: 1px;
 }
 
 .table-item-price {
-  padding-right: 0.5rem;
+  width: 26%;
 }
 
 .table-item-price-img {

@@ -35,34 +35,44 @@ const RefetchDataButton = ({ onButtonClick }: refetchDataButtonProps) => {
 type paginationElementProps = {
   pagination: Pagination;
   pageNumber: number;
-  onButtonClick: (pageNumber: number) => void;
+  onButtonClick: (pageNumber: number, totalPages: number) => void;
   disablePageButtons: boolean;
 };
 const PaginationElement = ({ pagination, pageNumber, onButtonClick, disablePageButtons }: paginationElementProps) => {
   const currentPage = pagination.page;
   const itemsPerPage = pagination.per_page;
+  const totalItems = pagination.total_items;
+  const totalPages = pagination.total_pages;
 
-  const itemsStart = currentPage == 1 ? currentPage : currentPage * itemsPerPage;
-  const itemsEnd = pagination.page == 1 ? currentPage * itemsPerPage : currentPage * itemsPerPage + itemsPerPage;
+  let itemsStart = 1;
+  let itemsEnd = currentPage * itemsPerPage;
+
+  if (currentPage > 1) {
+    itemsStart = (currentPage - 1) * itemsPerPage + 1;
+  }
+
+  if (itemsEnd > totalItems) {
+    itemsEnd = totalItems;
+  }
 
   return (
     <div className="pagination">
       <span>
-        Showing items {itemsStart} to {itemsEnd} of {pagination?.total_items}
+        Showing items {itemsStart} to {itemsEnd} of {totalItems}
       </span>
 
       <div className="paginationButtonGroup">
         <button
           className="paginationButton"
-          onClick={() => onButtonClick(pageNumber - 1)}
+          onClick={() => (pageNumber > 1 ? onButtonClick(pageNumber - 1, totalPages) : undefined)}
           disabled={currentPage == 1 || disablePageButtons}
         >
           Prev
         </button>
         <button
           className="paginationButton"
-          onClick={() => onButtonClick(pageNumber + 1)}
-          disabled={currentPage == pagination.total_pages || disablePageButtons}
+          onClick={() => (itemsEnd < totalItems ? onButtonClick(pageNumber + 1, totalPages) : undefined)}
+          disabled={currentPage == totalPages || itemsEnd == totalItems || disablePageButtons}
         >
           Next
         </button>
@@ -112,18 +122,19 @@ const ItemsContainer = () => {
     page: pageNumber,
     perPage: PER_PAGE,
   };
-  console.log(paginationRequest);
   const sortQueries: sortQuery[] = [{ field: "price_info.chaos_price", operation: "desc" }];
   const filterQueries: filterQuery[] = [{ field: "category", operation: "=", value: prepareCategoryName(category) }];
 
-  const { data, isLoading, isError, error, refetch, isSuccess } = useGetItemsData({
+  const { data, isError, error, refetch, isSuccess, isFetched } = useGetItemsData({
     pagination: paginationRequest,
     sortQueries: sortQueries,
     filterQueries: filterQueries,
   });
 
-  function handlePaginationButtonClick(pageNumber: number) {
-    setPageNumber(pageNumber);
+  function handlePaginationButtonClick(pageNumber: number, totalPages: number) {
+    if (pageNumber > 0 && pageNumber <= totalPages) {
+      setPageNumber(pageNumber);
+    }
   }
 
   const debouncedFilter = useMemo(() => {
@@ -133,8 +144,9 @@ const ItemsContainer = () => {
     }, 300);
   }, []); // No dependencies here to create the debounce only once
 
-  if (isLoading) {
-    console.log("loading data");
+  function refetchItemsData() {
+    refetch();
+    setDisablePageButtons(true);
   }
 
   if (isError) {
@@ -145,12 +157,11 @@ const ItemsContainer = () => {
     }
   }
 
-  // TODO: fix pagination not working
   useEffect(() => {
-    if (isSuccess && disablePageButtons) {
+    if (isFetched && disablePageButtons) {
       setDisablePageButtons(false);
     }
-  }, [disablePageButtons, isSuccess]);
+  }, [disablePageButtons, isFetched]);
 
   useEffect(() => {
     // this essentially equals isSuccess for us
@@ -168,10 +179,9 @@ const ItemsContainer = () => {
     };
   }, [searchInput, selectedItemType, data?.itemRows, debouncedFilter, filteredRows, isSuccess]);
 
-  function refetchItemsData() {
+  useEffect(() => {
     refetch();
-    setDisablePageButtons(true);
-  }
+  }, [paginationRequest.page, refetch]);
 
   return (
     <div id="items-container" className="items-container">

@@ -73,6 +73,7 @@ td:first-child {
 .table-item-img {
   height: 36px;
   width: 36px;
+  object-fit: contain;
 }
 
 .table-item-name {
@@ -94,7 +95,7 @@ td:first-child {
 }
 
 .table-item-price {
-  padding-right: 0.5rem;
+  width: 26%;
 }
 
 .table-item-price-img {

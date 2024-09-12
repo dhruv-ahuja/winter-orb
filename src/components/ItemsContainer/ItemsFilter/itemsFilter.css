@@ -66,3 +66,7 @@
   padding-top: 0;
   padding-bottom: 0;
 }
+
+.items-type-selection:disabled {
+  display: none;
+}

@@ -164,7 +164,6 @@ const ItemsContainer = () => {
   }, [disablePageButtons, isFetched]);
 
   useEffect(() => {
-    // this essentially equals isSuccess for us
     if (isSuccess && data?.itemRows) {
       if (!searchInput && !selectedItemType) {
         setFilteredRows(data.itemRows); // Show all if no filter

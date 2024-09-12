@@ -73,6 +73,7 @@ td:first-child {
 .table-item-img {
   height: 36px;
   width: 36px;
+  object-fit: contain;
 }
 
 .table-item-name {

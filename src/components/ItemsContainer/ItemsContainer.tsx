@@ -22,7 +22,6 @@ type refetchDataButtonProps = {
   onButtonClick: () => void;
 };
 
-// TODO: replace table content with this button on failures
 const RefetchDataButton = ({ onButtonClick }: refetchDataButtonProps) => {
   return (
     <div className="refetch-data-wrapper" onClick={() => onButtonClick()}>
@@ -166,9 +165,9 @@ const ItemsContainer = () => {
   useEffect(() => {
     if (isSuccess && data?.itemRows) {
       if (!searchInput && !selectedItemType) {
-        setFilteredRows(data.itemRows); // Show all if no filter
+        setFilteredRows(data.itemRows);
       } else {
-        debouncedFilter(searchInput, selectedItemType, filteredRows); // Debounce filtering
+        debouncedFilter(searchInput, selectedItemType, filteredRows);
       }
     }
 

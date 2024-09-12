@@ -54,6 +54,10 @@
   background-color: rgba(255, 255, 255, 0.15);
 }
 
+.highlight {
+  color: #8378ffe2;
+}
+
 .sidebar-category-img {
   padding-left: 0.75em;
   width: 28px;

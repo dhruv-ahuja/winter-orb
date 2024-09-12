@@ -1,8 +1,10 @@
-import { categoryMapping } from "../../api/schemas/poe";
+import { useLocation } from "react-router-dom";
+import { categoryLinkMapping, categoryMapping } from "../../api/schemas/poe";
 import "./sidebar.css";
 
 type categoryProps = {
   categoryDetails: string[];
+  highlight: boolean;
 };
 
 const Category = (props: categoryProps) => {
@@ -11,7 +13,7 @@ const Category = (props: categoryProps) => {
 
   return (
     <a href={link}>
-      <div className="sidebar-category">
+      <div className={`sidebar-category ${props.highlight ? "highlight" : ""}`}>
         <img src={`/sidebar/${imageName}`} className="sidebar-category-img" />
         {name}
       </div>
@@ -26,6 +28,9 @@ type categoryGroupProps = {
 };
 
 const CategoryGroup = (props: categoryGroupProps) => {
+  const location = useLocation();
+  const currentCategory = categoryLinkMapping.get(location.pathname) ?? "Currency";
+
   return (
     <>
       <div className="sidebar-group">
@@ -34,7 +39,11 @@ const CategoryGroup = (props: categoryGroupProps) => {
 
         <div className="sidebar-categories">
           {props.categoryDetails.map((categoryDetails) => (
-            <Category categoryDetails={categoryDetails} key={categoryDetails[0]}></Category>
+            <Category
+              categoryDetails={categoryDetails}
+              key={categoryDetails[0]}
+              highlight={categoryDetails[0] === currentCategory}
+            ></Category>
           ))}
         </div>
       </div>

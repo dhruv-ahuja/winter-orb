@@ -90,7 +90,7 @@ td:first-child {
   display: flex;
   /* this helps align the text to center without affecting image positioning */
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   padding-bottom: 1px;
 }
 

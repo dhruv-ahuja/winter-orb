@@ -1,6 +1,8 @@
 import { calculateItemPriceChange, Price, baseTableRow } from "../../config";
 import { Pagination } from "./common";
 
+// TODO: move mapping objects and the like to separate module
+
 export const categoryMapping: Map<string, string[][]> = new Map([
   [
     "CURRENCY",

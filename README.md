@@ -4,4 +4,4 @@ WinterOrb is a website based on the game Path of Exile featuring price history d
 
 ## Setup
 
-Run `npm install` and `npm run dev` to install dependencies and start the webserver locally. A `.env` file should contain the `VITE_BACKEND_URL` value to fetch the data from.
+Run `npm install` and `npm run dev` to install dependencies and start the webserver locally. Copy or rename the `.env.example` file to `.env` and modify the given values with the equivalent real values. Do note that the token environment variable is just a placeholder until I implement proper token management and auth flow in the frontend. Adding a token through env var enables me to deploy backend APIs without exposing them to the public.

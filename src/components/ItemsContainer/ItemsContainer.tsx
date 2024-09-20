@@ -6,14 +6,7 @@ import { useGetItemsData } from "../../api/routes/poe";
 import { Pagination } from "../../api/schemas/common";
 import { useLocation, useNavigate } from "react-router-dom";
 import { categoryLinkMapping } from "../../api/schemas/poe";
-import {
-  paginationQuery,
-  sortQuery,
-  filterQuery,
-  baseTableRow,
-  prepareCategoryName,
-  isBackendError,
-} from "../../config";
+import { paginationQuery, sortQuery, filterQuery, prepareCategoryName, isBackendError } from "../../config";
 import "./itemsContainer.css";
 
 const PER_PAGE = 100;
@@ -80,27 +73,6 @@ const PaginationElement = ({ pagination, pageNumber, onButtonClick, disablePageB
   );
 };
 
-function filterTableData(searchInput: string, selectedItemType: string, itemRows: baseTableRow[]) {
-  if (!searchInput && !selectedItemType) {
-    return itemRows;
-  }
-
-  itemRows.forEach((row) => {
-    const name = row.rowData.name.toLowerCase();
-    const input = searchInput.trim().toLowerCase();
-
-    if (input && !name.includes(input)) {
-      row.properties.visible = false;
-    }
-
-    if (selectedItemType && row.rowData.type !== selectedItemType) {
-      row.properties.visible = false;
-    }
-  });
-
-  return itemRows;
-}
-
 const ItemsContainer = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -113,7 +85,6 @@ const ItemsContainer = () => {
 
   const [searchInput, setSearchInput] = useState("");
   const [selectedItemType, setSelectedItemType] = useState("");
-  const [filteredRows, setFilteredRows] = useState<Array<baseTableRow>>([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [disablePageButtons, setDisablePageButtons] = useState(false);
 
@@ -124,24 +95,40 @@ const ItemsContainer = () => {
   const sortQueries: sortQuery[] = [{ field: "price_info.chaos_price", operation: "desc" }];
   const filterQueries: filterQuery[] = [{ field: "category", operation: "=", value: prepareCategoryName(category) }];
 
-  const { data, isError, error, refetch, isSuccess, isFetched } = useGetItemsData({
+  if (searchInput) {
+    filterQueries.push({ field: "name", operation: "like", value: searchInput });
+  }
+  if (selectedItemType) {
+    filterQueries.push({ field: "type_", operation: "=", value: selectedItemType });
+  }
+
+  const { data, isError, error, refetch, isFetched } = useGetItemsData({
     pagination: paginationRequest,
     sortQueries: sortQueries,
     filterQueries: filterQueries,
   });
 
-  function handlePaginationButtonClick(pageNumber: number, totalPages: number) {
-    if (pageNumber > 0 && pageNumber <= totalPages) {
-      setPageNumber(pageNumber);
+  function handlePaginationButtonClick(newPageNumber: number, totalPages: number) {
+    if (newPageNumber > 0 && newPageNumber <= totalPages) {
+      setPageNumber(newPageNumber);
     }
   }
 
-  const debouncedFilter = useMemo(() => {
-    return debounce((searchInput: string, selectedItemType: string, itemRows: baseTableRow[]) => {
-      const result = filterTableData(searchInput, selectedItemType, itemRows);
-      setFilteredRows(result);
-    }, 300);
-  }, []); // No dependencies here to create the debounce only once
+  function handleSearchInput(newSearchInput: string) {
+    setSearchInput(newSearchInput);
+    setPageNumber(1);
+  }
+
+  function handleItemTypeSelection(newTypeSelection: string) {
+    setSelectedItemType(newTypeSelection);
+    setPageNumber(1);
+  }
+
+  const debouncedRefetch = useMemo(() => {
+    return debounce(() => {
+      refetch();
+    }, 200);
+  }, [refetch]);
 
   function refetchItemsData() {
     refetch();
@@ -150,7 +137,7 @@ const ItemsContainer = () => {
 
   if (isError) {
     if (isBackendError(error)) {
-      console.log("Error getting items data:", error.apiError, error.statusCode);
+      console.error("Error getting items data:", error.apiError, error.statusCode);
     } else {
       console.error("An unexpected error occurred:", error);
     }
@@ -160,22 +147,16 @@ const ItemsContainer = () => {
     if (isFetched && disablePageButtons) {
       setDisablePageButtons(false);
     }
-  }, [disablePageButtons, isFetched]);
+  }, [disablePageButtons, isFetched, data]);
 
   useEffect(() => {
-    if (isSuccess && data?.itemRows) {
-      if (!searchInput && !selectedItemType) {
-        setFilteredRows(data.itemRows);
-      } else {
-        debouncedFilter(searchInput, selectedItemType, filteredRows);
-      }
-    }
+    debouncedRefetch();
 
     // Clean up debounce on unmount
     return () => {
-      debouncedFilter.cancel();
+      debouncedRefetch.cancel();
     };
-  }, [searchInput, selectedItemType, data?.itemRows, debouncedFilter, filteredRows, isSuccess]);
+  }, [searchInput, selectedItemType, debouncedRefetch]);
 
   useEffect(() => {
     refetch();
@@ -187,13 +168,13 @@ const ItemsContainer = () => {
 
       <ItemsFilterContainer
         searchInput={searchInput}
-        setSearchInput={setSearchInput}
+        setSearchInput={handleSearchInput}
         selectedItemType={selectedItemType}
-        setSelectedItemType={setSelectedItemType}
+        setSelectedItemType={handleItemTypeSelection}
       />
 
       {isError && <RefetchDataButton onButtonClick={refetchItemsData} />}
-      <ItemsTable itemRows={filteredRows} searchInput={searchInput} selectedItemType={selectedItemType} />
+      <ItemsTable itemRows={data?.itemRows ?? []} searchInput={searchInput} selectedItemType={selectedItemType} />
 
       {data?.pagination && (
         <PaginationElement

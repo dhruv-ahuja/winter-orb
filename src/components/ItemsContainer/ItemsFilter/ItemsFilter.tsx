@@ -56,15 +56,16 @@ const ItemsTypeSelector = ({ selectedItemType, setSelectedItemType }: itemsTypeS
   return (
     <select
       name="item-type"
-      id="items-type-selection"
       className="items-type-selection"
       value={selectedItemType}
       onChange={(e) => setSelectedItemType(e.target.value)}
       disabled={itemTypes.length < 1}
     >
       <option value="">Item Type</option>
-      {itemTypes.map((entry) => (
-        <option value={entry}>{entry}</option>
+      {itemTypes.map((entry, index) => (
+        <option key={index} value={entry}>
+          {entry}
+        </option>
       ))}
     </select>
   );

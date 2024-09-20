@@ -114,10 +114,20 @@ const ItemsContainer = () => {
     }
   }
 
+  function handleSearchInput(newSearchInput: string) {
+    setSearchInput(newSearchInput);
+    setPageNumber(1);
+  }
+
+  function handleItemTypeSelection(newTypeSelection: string) {
+    setSelectedItemType(newTypeSelection);
+    setPageNumber(1);
+  }
+
   const debouncedRefetch = useMemo(() => {
     return debounce(() => {
       refetch();
-    }, 300);
+    }, 200);
   }, [refetch]);
 
   function refetchItemsData() {
@@ -158,9 +168,9 @@ const ItemsContainer = () => {
 
       <ItemsFilterContainer
         searchInput={searchInput}
-        setSearchInput={setSearchInput}
+        setSearchInput={handleSearchInput}
         selectedItemType={selectedItemType}
-        setSelectedItemType={setSelectedItemType}
+        setSelectedItemType={handleItemTypeSelection}
       />
 
       {isError && <RefetchDataButton onButtonClick={refetchItemsData} />}

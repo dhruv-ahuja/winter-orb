@@ -1,7 +1,8 @@
 import { APIError } from "./api/schemas/common";
 import { priceTableData } from "./api/schemas/poe";
 
-export const backendUrl = import.meta.env.VITE_BACKEND_URL;
+export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+export const API_TOKEN = import.meta.env.VITE_API_TOKEN;
 
 export class BackendError extends Error {
   statusCode: number;
@@ -19,6 +20,7 @@ export function isBackendError(error: Error): error is BackendError {
   return error instanceof BackendError && "statusCode" in error && "apiError" in error;
 }
 
+// TODO: clean up this module -- interfaces and the like should probably be elsewhere
 export type Price = {
   timestamp: Date;
   price: string;

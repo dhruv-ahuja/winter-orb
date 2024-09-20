@@ -92,6 +92,7 @@ td:first-child {
   align-items: center;
   justify-content: space-between;
   padding-bottom: 1px;
+  width: 84%;
 }
 
 .table-item-price {

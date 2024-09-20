@@ -1,5 +1,8 @@
 import { useRef } from "react";
 import "./itemsFilter.css";
+import { useLocation } from "react-router-dom";
+import { categoryLinkMapping, typeCategoryMapping } from "../../../api/schemas/poe";
+import { prepareCategoryName } from "../../../config";
 
 type itemsSearchFilterProps = {
   searchInput: string;
@@ -46,6 +49,10 @@ type itemsTypeSelectorProps = {
 };
 
 const ItemsTypeSelector = ({ selectedItemType, setSelectedItemType }: itemsTypeSelectorProps) => {
+  const location = useLocation();
+  const category = categoryLinkMapping.get(location.pathname) ?? "Currency";
+  const itemTypes = typeCategoryMapping.get(prepareCategoryName(category)) ?? [];
+
   return (
     <select
       name="item-type"
@@ -53,11 +60,12 @@ const ItemsTypeSelector = ({ selectedItemType, setSelectedItemType }: itemsTypeS
       className="items-type-selection"
       value={selectedItemType}
       onChange={(e) => setSelectedItemType(e.target.value)}
+      disabled={itemTypes.length < 1}
     >
       <option value="">Item Type</option>
-      <option value="Two Handed Sword">Two Handed Sword</option>
-      <option value="Claw">Claw</option>
-      <option value="Wand">Wand</option>
+      {itemTypes.map((entry) => (
+        <option value={entry}>{entry}</option>
+      ))}
     </select>
   );
 };

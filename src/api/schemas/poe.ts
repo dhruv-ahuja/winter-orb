@@ -90,6 +90,54 @@ export const categoryLinkMapping: Map<string, string> = new Map([
   ["/vials", "Vials"],
 ]);
 
+export const typeCategoryMapping = new Map<string, string[]>([
+  [
+    "UniqueWeapon",
+    [
+      "Bow",
+      "Claw",
+      "Dagger",
+      "One Handed Axe",
+      "One Handed Mace",
+      "One Handed Sword",
+      "Staff",
+      "Two Handed Axe",
+      "Two Handed Mace",
+      "Two Handed Sword",
+      "Wand",
+    ],
+  ],
+  ["UniqueArmour", ["Body Armour", "Boots", "Gloves", "Helmets", "Quiver", "Shield"]],
+  ["UniqueAccessory", ["Amulet", "Belt", "Ring"]],
+  ["ClusterJewel", ["Large Cluster Jewel", "Medium Cluster Jewel", "Small Cluster Jewel"]],
+  [
+    "BaseType",
+    [
+      "Amulet",
+      "Belt",
+      "Body Armour",
+      "Boots",
+      "Bow",
+      "Claw",
+      "Dagger",
+      "Gloves",
+      "Helmet",
+      "Jewel",
+      "One Handed Axe",
+      "One Handed Mace",
+      "One Handed Sword",
+      "Quiver",
+      "Ring",
+      "Shield",
+      "Staff",
+      "Two Handed Axe",
+      "Two Handed Mace",
+      "Two Handed Sword",
+      "Wand",
+    ],
+  ],
+]);
+
 export type priceTableData = {
   priceData: number[];
   priceChange: number;

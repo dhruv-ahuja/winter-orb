@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { APIData } from "../schemas/common";
 import { baseTableData, ItemsData, parseItemToTableData } from "../schemas/poe";
-import { BackendError, backendUrl, filterQuery, paginationQuery, sortQuery } from "../../config";
+import { API_TOKEN, BackendError, BACKEND_URL, filterQuery, paginationQuery, sortQuery } from "../../config";
 
 type getItemsDataProps = {
   pagination?: paginationQuery;
@@ -27,7 +27,7 @@ async function getItemsData(
   sortQueries?: sortQuery[],
   filterQueries?: filterQuery[]
 ): Promise<APIData<ItemsData>> {
-  const url = new URL(backendUrl + "/poe/items");
+  const url = new URL(BACKEND_URL + "/poe/items");
   const searchParams = new URLSearchParams();
 
   if (pagination) {
@@ -51,7 +51,9 @@ async function getItemsData(
 
   url.search = searchParams.toString();
 
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    headers: { Authorization: `Bearer ${API_TOKEN}` },
+  });
   const jsonData = await response.json();
 
   if (!response.ok) {

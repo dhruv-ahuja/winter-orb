@@ -27,3 +27,22 @@
   height: 45px;
   width: 45px;
 }
+
+@media (max-width: 500px) {
+  .logo-colored-text,
+  .logo-text {
+    display: none;
+  }
+
+  .logo-img {
+    height: 37px;
+    width: 37px;
+  }
+}
+
+@media (max-width: 900px) {
+  .logo-colored-text,
+  .logo-text {
+    display: none;
+  }
+}

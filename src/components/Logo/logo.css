@@ -3,7 +3,7 @@
   align-items: center;
   /* font: 20px "Shippori Antique B1", sans-serif; */
   /* font-weight: 400; */
-  font: 2em "Noto Sans", sans-serif;
+  font: 1.5em "Noto Sans", sans-serif;
   font-weight: 500;
   width: 100%;
   padding: 10px;
@@ -15,8 +15,6 @@
 }
 
 .logo-img {
-  height: 92.02px;
-  width: 91.5px;
-  width: 100%;
-  display: none;
+  height: 45px;
+  width: 45px;
 }

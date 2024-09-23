@@ -4,3 +4,17 @@
   grid-template-columns: 14vw 82vw;
   column-gap: 2em;
 }
+
+@media (max-width: 500px) {
+  .content-wrapper {
+    grid-template-columns: 6vw 86vw;
+    row-gap: 0.5em;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 900px) {
+  .content-wrapper {
+    grid-template-columns: 12vw 82vw;
+    row-gap: 1em;
+  }
+}

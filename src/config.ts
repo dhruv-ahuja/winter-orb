@@ -50,15 +50,16 @@ export interface baseTableRow {
 export interface tableHeader {
   name: string;
   width: string;
+  mobileWidth: string;
 }
 
 export const commonHeaders: tableHeader[] = [
-  { name: "Name", width: "25%" },
-  { name: "Type", width: "17.5%" },
-  { name: "Value", width: "8%" },
-  { name: "Last 7 Days", width: "14.25%" },
-  { name: "Next 4 Days", width: "14.25%" },
-  { name: "Listings", width: "10%" },
+  { name: "Name", width: "20%", mobileWidth: "135px" },
+  { name: "Type", width: "17.5%", mobileWidth: "130px" },
+  { name: "Value", width: "14%", mobileWidth: "100px" },
+  { name: "Last 7 Days", width: "14.25%", mobileWidth: "120px" },
+  { name: "Next 4 Days", width: "14.25%", mobileWidth: "120px" },
+  { name: "Listings", width: "10%", mobileWidth: "75px" },
 ];
 
 // format numerical values in number form

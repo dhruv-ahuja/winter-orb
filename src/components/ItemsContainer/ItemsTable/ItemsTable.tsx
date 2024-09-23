@@ -7,16 +7,17 @@ import { MutableRefObject, ReactElement, RefObject, useEffect, useRef } from "re
 type tableHeadersProps = {
   headers: tableHeader[];
   tableHeaderRefs: MutableRefObject<HTMLTableHeaderCellElement[]>;
+  screenWidth: number;
 };
 
-const TableHeaders = ({ headers, tableHeaderRefs }: tableHeadersProps) => {
+const TableHeaders = ({ headers, tableHeaderRefs, screenWidth }: tableHeadersProps) => {
   return (
     <thead>
       <tr>
         {headers.map((header, index) => (
           <th
             key={header.name}
-            style={{ width: header.width }}
+            style={{ width: screenWidth > 500 ? header.width : header.mobileWidth }}
             ref={(element) => {
               if (element) {
                 tableHeaderRefs.current[index] = element;
@@ -151,6 +152,8 @@ const ItemsTable = (props: itemsTableProps) => {
   const tableRef: RefObject<HTMLDivElement> = useRef(null);
   const tableHeaderRefs: MutableRefObject<HTMLTableHeaderCellElement[]> = useRef([]);
 
+  const screenWidth = window.innerWidth;
+
   useEffect(() => {
     const tableWrapper = tableRef.current;
 
@@ -169,7 +172,7 @@ const ItemsTable = (props: itemsTableProps) => {
   return (
     <div className="items-table-wrapper" ref={tableRef}>
       <table>
-        <TableHeaders headers={commonHeaders} tableHeaderRefs={tableHeaderRefs} />
+        <TableHeaders headers={commonHeaders} tableHeaderRefs={tableHeaderRefs} screenWidth={screenWidth} />
         <TableBody rows={props.itemRows} />
       </table>
     </div>

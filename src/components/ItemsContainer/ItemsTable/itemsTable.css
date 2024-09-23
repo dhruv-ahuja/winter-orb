@@ -34,6 +34,7 @@ thead > tr {
   position: sticky;
   height: 2rem;
   top: 0;
+  z-index: 999;
 }
 
 th.scrolled {
@@ -63,6 +64,7 @@ td {
   height: 40px;
   text-align: center;
   /* border-bottom: 4px solid #212121; */
+  padding: 0 1.5vw;
 }
 
 td:first-child {

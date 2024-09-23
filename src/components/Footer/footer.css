@@ -27,6 +27,14 @@ footer {
   font: 0.95em "Noto Sans", sans-serif;
 }
 
+@media (max-width: 500px) {
+  footer {
+    height: 5%;
+    column-gap: 1.75vw;
+    font-size: 0.75em;
+  }
+}
+
 /* * matches the svg icon colour */
 .footer-declaration {
   color: rgba(134, 134, 134, 88);

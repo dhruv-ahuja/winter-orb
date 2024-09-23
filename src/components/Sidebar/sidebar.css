@@ -69,3 +69,18 @@
   height: 0.5em;
   border: 0;
 }
+
+@media (max-width: 500px) {
+  .sidebar {
+    /* display: none; */
+    text-overflow: ellipsis;
+    overflow: scroll;
+    font-size: 0em;
+    min-width: 14vw;
+  }
+
+  .sidebar-category-gap {
+    background-color: black;
+    height: 3vh;
+  }
+}

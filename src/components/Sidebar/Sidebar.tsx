@@ -13,7 +13,7 @@ const Category = (props: categoryProps) => {
 
   return (
     <a href={link}>
-      <div className={`sidebar-category ${props.highlight ? "highlight" : ""}`}>
+      <div className={`sidebar-category${props.highlight ? " highlight" : ""}`} title={name}>
         <img src={`/sidebar/${imageName}`} className="sidebar-category-img" />
         {name}
       </div>

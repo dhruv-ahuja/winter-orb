@@ -7,19 +7,14 @@
 
 @media (max-width: 500px) {
   .content-wrapper {
-    display: grid;
-    grid-template-rows: 6vh 85vh;
     grid-template-columns: 6vw 86vw;
-    column-gap: 2em;
+    row-gap: 0.5em;
   }
 }
 
-@media (max-width: 900px) {
+@media (min-width: 500px) and (max-width: 900px) {
   .content-wrapper {
-    display: grid;
-    grid-template-rows: 6vh 85vh;
-    grid-template-columns: 6vw 86vw;
-    column-gap: 2em;
+    grid-template-columns: 12vw 82vw;
     row-gap: 1em;
   }
 }

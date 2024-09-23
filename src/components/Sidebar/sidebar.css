@@ -23,7 +23,7 @@
   color: rgba(246, 247, 253, 0.4);
   /* font: 14px "Shippori Antique", sans-serif;
       font-weight: 400; */
-  font: 1.05em "Sintony", sans-serif;
+  font: 1.05rem "Sintony", sans-serif;
   font-weight: 700;
 }
 
@@ -39,7 +39,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-size: 0.9em;
+  font-size: 0.9rem;
   font-weight: 500;
 }
 
@@ -72,7 +72,6 @@
 
 @media (max-width: 500px) {
   .sidebar {
-    /* display: none; */
     text-overflow: ellipsis;
     overflow: scroll;
     font-size: 0em;
@@ -82,5 +81,22 @@
   .sidebar-category-gap {
     background-color: black;
     height: 3vh;
+  }
+
+  .sidebar-category,
+  .sidebar-group {
+    font-size: 0em;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 900px) {
+  .sidebar {
+    text-overflow: ellipsis;
+    overflow: scroll;
+    word-break: break-all;
+  }
+
+  .sidebar-category-img {
+    padding-left: 0.2em;
   }
 }

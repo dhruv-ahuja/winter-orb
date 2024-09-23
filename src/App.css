@@ -1,6 +1,6 @@
 .content-wrapper {
   display: grid;
-  grid-template-rows: 6vh 85vh;
+  grid-template-rows: 6vh 85vh 9vh;
   grid-template-columns: 14vw 82vw;
   column-gap: 2em;
 }

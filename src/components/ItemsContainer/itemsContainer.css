@@ -75,3 +75,16 @@
   cursor: not-allowed;
   opacity: 0.5;
 }
+
+@media (max-width: 500px) {
+  .pagination {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+  }
+
+  .paginationButton {
+    font-size: 13px;
+    padding: 4px 10px;
+  }
+}

@@ -80,6 +80,7 @@ td:first-child {
 
 .table-item-name {
   padding-left: 0.5rem;
+  text-align: left;
 }
 
 .table-item-col {

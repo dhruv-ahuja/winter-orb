@@ -149,9 +149,9 @@ export type priceTableData = {
 export type PriceInfo = {
   chaos_price: string;
   divine_price: string;
-  price_history: Price[];
+  price_history?: Price[];
   price_history_currency: string;
-  price_prediction: Price[];
+  price_prediction?: Price[];
   price_prediction_currency: string;
   low_confidence: boolean;
   listings: number;
@@ -178,7 +178,15 @@ export type baseTableData = {
   pagination?: Pagination;
 };
 
-function prepareItemPriceData(priceData: Price[]): priceTableData {
+function prepareItemPriceData(priceData: Price[] | null): priceTableData {
+  if (!priceData || !Array.isArray(priceData)) {
+    return {
+      priceData: [],
+      priceChange: 0,
+      isPositive: true,
+    };
+  }
+
   const formattedPriceData = priceData.map((entry) => parseFloat(entry.price));
   const priceChange = calculateItemPriceChange(formattedPriceData);
   const isPositive = priceChange >= 0;
@@ -190,7 +198,11 @@ function prepareItemPriceData(priceData: Price[]): priceTableData {
   };
 }
 
-export function parseItemToTableData(items: Item[]): baseTableRow[] {
+export function parseItemToTableData(items?: Item[]): baseTableRow[] {
+  if (!items) {
+    return [];
+  }
+
   const itemRows = items.map((item) => {
     const itemRow: baseTableRow = {
       rowData: {

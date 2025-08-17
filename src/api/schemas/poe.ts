@@ -149,9 +149,9 @@ export type priceTableData = {
 export type PriceInfo = {
   chaos_price: string;
   divine_price: string;
-  price_history?: Price[];
+  price_history: Price[] | null;
   price_history_currency: string;
-  price_prediction?: Price[];
+  price_prediction: Price[] | null;
   price_prediction_currency: string;
   low_confidence: boolean;
   listings: number;
